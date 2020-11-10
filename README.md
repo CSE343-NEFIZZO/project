@@ -1,10 +1,1 @@
-In the fast and tiring life brought about by urbanization, many of us have started to use the internet to order food frequently. This situation, which is both unhealthy and costly,drives us to laziness. Especially in this pandemic period, instead of going into such risky situations, we can cook easily and healthy meals at our home. We can enjoy these foods that we know what they contain. 
-We aim to eliminate this risky situation and make cooking fun and preferable. With this project, users can search for recipes, share recipes and communicate with other users.
-
-Task Sharing
-
-Elif Goral -> Login / Profile
-
-Emirhan Uzun/Saliha Derin -> Recipe add-remove-listing-search recipe
-
-Mustafa Sevim/Halime Kuvel -> Forum
+The recipe adding  screen contains many sections. These sections are recipe name, serving portion, preparation and cooking time, recipe description, ingredients and recipe picture. The user may type these section and upload to application.
