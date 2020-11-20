@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/forumTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Forum"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="9dp"
+            android:textColor="#459">
+
+        </TextView>
+
+        <Button
+            android:id="@+id/addForumBtn"
+            android:textColorHint="#fff"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Add New Forum"
+            android:textSize="8dp"
+            android:padding="5dp"
+            android:layout_marginRight="8dp">
+
+        </Button>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/searchEditTxt"
+        android:layout_below="@id/forumTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search for Forum Subject">
+
+    </EditText>
+
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_below="@id/searchEditTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:textColorHint="#fff"
+        android:hint="Search">
+
+
+    </Button>
+
+    <ListView
+        android:layout_below="@id/searchBtn"
+        android:clickable="true"
+        android:id="@+id/forumList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ></ListView>
+
+
+</RelativeLayout>
