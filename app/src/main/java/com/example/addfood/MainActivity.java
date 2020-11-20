@@ -14,16 +14,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textview;
-    private static int DELAY_TIME = 4000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+        startActivity(intent);
 
-        textview = (TextView) findViewById(R.id.nefizzo);
+        /*textview = (TextView) findViewById(R.id.nefizzo);
         Animation animation = AnimationUtils.loadAnimation(this,R.anim.animation);
 
         textview.startAnimation(animation);
@@ -31,16 +31,11 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                startActivity(intent);
+
             }
-        },DELAY_TIME);
+        },DELAY_TIME);*/
 
 
-        /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");*/
     }
 
 

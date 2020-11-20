@@ -20,11 +20,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:text="Recipe Name"
                 android:textColor="#F60404"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp" />
 
             <EditText
                 android:id="@+id/recipeName"
@@ -119,7 +120,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/ingrediants"
+                android:id="@+id/ingredientsString"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:gravity="left|top"
@@ -142,6 +143,7 @@
                 android:gravity="left|top"
                 android:padding="10dp"
                 android:background="@drawable/edit_background"
+                android:id="@+id/instructionsString"
                 android:hint="Instructions.." />
 
             <ImageView
@@ -168,6 +170,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_background"
                     android:text="Choose image"
+                    android:onClick="SelectImageBtn"
                     app:backgroundTint="#F60404" />
 
 
@@ -181,7 +184,9 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/edit_background"
-                android:text="Save Draft"
+                android:text="Send Recipe"
+                android:id="@+id/uploadRecipe"
+                android:onClick="UploadRecipeBtn"
                 android:textColor="#fff"
                 app:backgroundTint="#F60404" />
 

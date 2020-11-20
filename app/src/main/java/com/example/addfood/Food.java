@@ -7,8 +7,9 @@ public class Food {
     private int cookingHour,cookingMin;
     private String ingredients;
     private String instructions;
+    private String itemImage;
 
-    public Food(String foodName, String servingNumber, int preparationHour, int preparationMin, int cookingHour, int cookingMin, String ingredients, String instructions) {
+    public Food(String foodName, String servingNumber, int preparationHour, int preparationMin, int cookingHour, int cookingMin, String ingredients, String instructions, String itemImage) {
         this.foodName = foodName;
         this.servingNumber = servingNumber;
         this.preparationHour = preparationHour;
@@ -17,6 +18,7 @@ public class Food {
         this.cookingMin = cookingMin;
         this.ingredients = ingredients;
         this.instructions = instructions;
+        this.itemImage = itemImage;
     }
 
     public String getFoodName() {
@@ -81,5 +83,13 @@ public class Food {
 
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    public String getItemImage() {
+        return itemImage;
+    }
+
+    public void setItemImage(String itemImage) {
+        this.itemImage = itemImage;
     }
 }
