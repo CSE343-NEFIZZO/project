@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,12 +12,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,10 +27,10 @@ public class OuterForumActivity extends AppCompatActivity {
 
     Button addbtn;
     ListView forumListView;
-    List<OuterForumModel> forumTitleList;
-    OuterForumListAdapter adp;
+    OuterForumAdapter adp;
     Button searchBtn;
     EditText searchEditTxt;
+    List<OuterForumModel> forumTitleList;
 
     String userName;
     DatabaseReference forumRef;
@@ -56,7 +52,9 @@ public class OuterForumActivity extends AppCompatActivity {
         searchBtn = (Button) findViewById(R.id.searchBtn);
         searchEditTxt = (EditText) findViewById(R.id.searchEditTxt);
         forumTitleList = new ArrayList<>();
+        userName = "halime";
     }
+
     private void click() {
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,8 +69,9 @@ public class OuterForumActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(OuterForumActivity.this, adp.getItem(position).getForumTitle(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), InnerForumActivity.class);
-                intent.put("forumTitle", adp.getItem(position).getForumTitle());
-                intent.put("userName", userName);
+                intent.putExtra("forumTitle", adp.getItem(position).getForumTitle());
+                intent.putExtra("userName", userName);
+                startActivity(intent);
             }
         });
     }
@@ -83,12 +82,13 @@ public class OuterForumActivity extends AppCompatActivity {
         forumRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds: snapshot.getChildren()){
-                    String title = ""+ds.child("forumTitle").getValue().toString();
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String title = "" + ds.child("forumTitle").getValue().toString();
                     OuterForumModel temp = new OuterForumModel(title);
                     forumTitleList.add(temp);
                 }
-                adp = new OuterForumListAdapter(forumTitleList, OuterForumActivity.this);
+                adp = new OuterForumAdapter(forumTitleList, OuterForumActivity.this);
                 forumListView.setAdapter(adp);
             }
 

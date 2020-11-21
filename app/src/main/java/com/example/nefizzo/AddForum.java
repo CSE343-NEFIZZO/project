@@ -48,9 +48,9 @@ public class AddForum extends AppCompatActivity {
     }
 
     public void click() {
-       addBtn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 forumTitle = forumTitleEdt.getText().toString();
                 caption = captionEdt.getText().toString();
 
@@ -60,17 +60,17 @@ public class AddForum extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         List<String> forumTitleList = new ArrayList<>();
-                        for (DataSnapshot ds: snapshot.getChildren()){
-                            String txt = ""+ds.child("forumTitle").getValue().toString();
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            String txt = "" + ds.child("forumTitle").getValue().toString();
                             forumTitleList.add(txt);
                         }
 
-                        for(int i = 0 ; i < forumTitleList.size() ; i++) {
-                            if(forumTitleList.get(i).equals(forumTitle)) {
+                        for (int i = 0; i < forumTitleList.size(); i++) {
+                            if (forumTitleList.get(i).equals(forumTitle)) {
                                 isFind = 1;
                             }
                         }
-                        if(isFind == 0) {
+                        if (isFind == 0) {
                             Toast.makeText(AddForum.this, "Forum created!", Toast.LENGTH_LONG).show();
                             OuterForumModel newForum = new OuterForumModel(forumTitle, username, caption);
                             forumRef.child(forumTitle).setValue(newForum);
@@ -85,20 +85,20 @@ public class AddForum extends AppCompatActivity {
 
                     }
                 });
-               if(isFind == 1) {
-                   Toast.makeText(AddForum.this, "This forum title already exists!", Toast.LENGTH_LONG).show();
-                   Intent intent = new Intent(AddForum.this, AddForum.class);
-                   startActivity(intent);
-               }
-           }
-       });
+                if (isFind == 1) {
+                    Toast.makeText(AddForum.this, "This forum title already exists!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(AddForum.this, AddForum.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
-       addImageBtn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
+        addImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-           }
-       });
+            }
+        });
 
     }
 }

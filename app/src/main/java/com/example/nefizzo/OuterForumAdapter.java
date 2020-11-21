@@ -6,14 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import java.util.List;
 
-public class OuterForumListAdapter extends BaseAdapter{
-
+public class OuterForumAdapter extends BaseAdapter {
     List<OuterForumModel> forumList;
     Context context;
 
-    public OuterForumListAdapter(List<OuterForumModel> forumList, Context context) {
+    public OuterForumAdapter() {
+    }
+
+    public OuterForumAdapter(List<OuterForumModel> forumList, Context context) {
         this.forumList = forumList;
         this.context = context;
     }
@@ -22,6 +25,7 @@ public class OuterForumListAdapter extends BaseAdapter{
     public int getCount() {
         return forumList.size();
     }
+
     @Override
     public OuterForumModel getItem(int position) {
         return forumList.get(position);

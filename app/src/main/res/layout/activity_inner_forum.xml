@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.forum.MainActivity">
+
+    <TextView
+        android:id="@+id/forumTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#468755"
+        android:gravity="center"
+        android:text="Forum Title"
+        android:textSize="35dp"
+        android:textStyle="bold"></TextView>
+
+    <LinearLayout
+        android:id="@+id/forumView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/forumTitle"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/forumImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_launcher_background"></ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/likeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Like"></Button>
+
+            <Button
+                android:id="@+id/dislikeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dislike"></Button>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/forumView"
+        android:text="Forum topic"
+        android:textSize="20dp"></TextView>
+
+    <ListView
+        android:id="@+id/forumList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/prevnext"
+        android:layout_below="@id/caption"
+        android:background="#fff"></ListView>
+
+    <LinearLayout
+        android:id="@+id/prevnext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/comment"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/prevPageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#987653"
+            android:hint="Older Comments"></Button>
+
+        <Button
+            android:id="@+id/nextPageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#987653"
+            android:hint="Newer Comments"></Button>
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sendButton"
+        android:hint="Add comment"
+        android:textAlignment="center"></EditText>
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#468789"
+        android:hint="Send Commend"></Button>
+
+
+</RelativeLayout>
