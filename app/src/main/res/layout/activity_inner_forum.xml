@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#468755"
+        android:background="#468789"
         android:gravity="center"
         android:text="Forum Title"
         android:textSize="35dp"
@@ -22,7 +22,7 @@
         android:id="@+id/forumView"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@id/forumTitle"
+        android:layout_below="@id/caption"
         android:orientation="horizontal">
 
         <ImageView
@@ -60,7 +60,7 @@
         android:id="@+id/caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/forumView"
+        android:layout_below="@id/forumTitle"
         android:text="Forum topic"
         android:textSize="20dp"></TextView>
 
@@ -69,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/prevnext"
-        android:layout_below="@id/caption"
+        android:layout_below="@id/forumView"
         android:background="#fff"></ListView>
 
     <LinearLayout
@@ -84,6 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:visibility="gone"
             android:background="#987653"
             android:hint="Older Comments"></Button>
 
@@ -92,6 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:visibility="gone"
             android:background="#987653"
             android:hint="Newer Comments"></Button>
     </LinearLayout>

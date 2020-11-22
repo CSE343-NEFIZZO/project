@@ -33,8 +33,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#468789"
             android:hint="Add New Forum"
-            android:textSize="8dp"
+            android:textSize="11dp"
             android:padding="5dp"
             android:layout_marginRight="8dp">
 
@@ -55,8 +56,9 @@
         android:id="@+id/searchBtn"
         android:layout_below="@id/searchEditTxt"
         android:layout_width="match_parent"
+        android:background="#468789"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
+        android:textSize="20dp"
         android:textColorHint="#fff"
         android:hint="Search">
 

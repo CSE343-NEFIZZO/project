@@ -48,8 +48,7 @@
             android:id="@+id/addPhotoBtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/addbutton"
-            >
+            android:background="@drawable/addbutton">
 
         </ImageButton>
 
@@ -83,6 +82,9 @@
             android:id="@+id/addNewFrmBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#459"
+            android:textColor="#fff"
+            android:textSize="15dp"
             android:text="Add">
 
         </Button>
