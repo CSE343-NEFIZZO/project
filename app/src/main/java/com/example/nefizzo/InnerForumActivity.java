@@ -1,11 +1,10 @@
 package com.example.nefizzo;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InnerForumActivity extends AppCompatActivity {
-    static List<InnerForumModel> list;
+    List<InnerForumModel> list;
     InnerForumAdapter adp;
 
     ListView listView;
@@ -37,8 +35,6 @@ public class InnerForumActivity extends AppCompatActivity {
     DatabaseReference forumRef;
     EditText commentEdtTxt;
 
-    static List<String> names = new ArrayList<>();
-    static List<String> comments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +42,15 @@ public class InnerForumActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inner_forum);
         define();
         getValue();
-        setValue();
+        setCaption();
         fillList();
-
         click();
 
     }
 
 
 
-    private void setValue() {
+    private void setCaption() {
         forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
         forumRef.child("caption").addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,7 +76,6 @@ public class InnerForumActivity extends AppCompatActivity {
                     InnerForumModel temp = new InnerForumModel(username, comment);
                     forumRef.child(comment).setValue(temp);
                     commentEdtTxt.setText("");
-                    //////////////////////////devam edilecek
                 }
                 if (comment.equals("")) {
                     Toast.makeText(getApplicationContext(), "Empty comment is not valid.", Toast.LENGTH_LONG).show();
@@ -108,36 +102,29 @@ public class InnerForumActivity extends AppCompatActivity {
     }
 
     private void fillList() {
-        list = new ArrayList<InnerForumModel>();
-        list.clear();
-    //    names.clear();
-    //    comments.clear();   // düzeltilecek - 2 tane yazdırıyor
-
         forumRef = FirebaseDatabase.getInstance().getReference("Forums").child(forumTitle).child("comments");
         forumRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
+              for (DataSnapshot ds : snapshot.getChildren()) {
                     String cmnt = ds.child("comment").getValue().toString();
                     String name = ds.child("name").getValue().toString();
-
-                    names.add(name);
-                    comments.add(cmnt);
+                    list.add(new InnerForumModel(name,cmnt));
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        for(int i=0; i<names.size();++i){
-            list.add(new InnerForumModel(names.get(i),comments.get(i)));
-        }
-        Log.i("asd", String.valueOf(list.size()));
-        adp = new InnerForumAdapter(list, InnerForumActivity.this);
-        adp.notifyDataSetChanged();
-        listView.setAdapter(adp);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                adp = new InnerForumAdapter(list, InnerForumActivity.this);
+                listView.setAdapter(adp);
+            }
+        },10);
 
     }
 
@@ -152,6 +139,7 @@ public class InnerForumActivity extends AppCompatActivity {
         caption = (TextView) findViewById(R.id.caption);
         title = (TextView) findViewById(R.id.forumTitle);
         commentEdtTxt = (EditText) findViewById(R.id.comment);
+        list = new ArrayList<InnerForumModel>();
     }
 
     private void getValue() {
