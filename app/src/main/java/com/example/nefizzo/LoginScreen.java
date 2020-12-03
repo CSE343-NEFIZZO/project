@@ -78,6 +78,16 @@ public class LoginScreen extends AppCompatActivity {
     public void goMainScreen(){
                 degerAl();
                 user = mAuth.getCurrentUser();
+                if (mailtxt.matches("")) {
+                    Toast.makeText(LoginScreen.this, "You did not enter a mail", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginScreen.this, LoginScreen.class));
+                    return;
+                }
+                if (passwordtxt.matches("")) {
+                    Toast.makeText(LoginScreen.this, "You did not enter a password", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginScreen.this, LoginScreen.class));
+                    return;
+                }
                 mAuth.signInWithEmailAndPassword(mailtxt, passwordtxt).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {

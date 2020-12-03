@@ -40,12 +40,16 @@ public class ResetPassword extends AppCompatActivity {
     }
 
     public void goMainScreen(){
-
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 degerAl();
                 auth = FirebaseAuth.getInstance();
+                if (mail.matches("")) {
+                    Toast.makeText(ResetPassword.this, "You did not enter a mail address", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ResetPassword.this, ResetPassword.class));
+                    return ;
+                }
                 if (TextUtils.isEmpty(mail)) {
                     Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
                     return;
