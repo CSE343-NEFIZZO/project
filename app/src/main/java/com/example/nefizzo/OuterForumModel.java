@@ -5,18 +5,34 @@ public class OuterForumModel {
     String forumTitle;
     String username;
     String caption;
-    String comments=" ";
+    String comments = " ";
+    String imageUrl;
 
     public OuterForumModel(String forumTitle) {
         this.forumTitle = forumTitle;
     }
 
-        public OuterForumModel(String forumTitle, String username, String caption) {
-            this.forumTitle = forumTitle;
-            this.username = username;
-            this.caption = caption;
-        }
+    public OuterForumModel(String forumTitle, String username, String caption) {
+        this.forumTitle = forumTitle;
+        this.username = username;
+        this.caption = caption;
+        this.imageUrl= null;
+    }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public OuterForumModel(String forumTitle, String username, String caption, String imageUrl) {
+        this.forumTitle = forumTitle;
+        this.username = username;
+        this.caption = caption;
+        this.imageUrl = imageUrl;
+    }
 
     public String getUsername() {
         return username;

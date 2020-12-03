@@ -14,11 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +52,6 @@ public class InnerForumActivity extends AppCompatActivity {
 
     }
 
-
-
     private void setCaption() {
         forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
         forumRef.child("caption").addValueEventListener(new ValueEventListener() {
@@ -63,6 +65,23 @@ public class InnerForumActivity extends AppCompatActivity {
 
             }
         });
+
+        forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
+        forumRef.child("imageUrl").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.toString().equals("empty"))
+                    Picasso.get().load(snapshot.getValue().toString()).into(forumImage);
+                else
+                    forumImage.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void click() {
@@ -106,12 +125,13 @@ public class InnerForumActivity extends AppCompatActivity {
         forumRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-              for (DataSnapshot ds : snapshot.getChildren()) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     String cmnt = ds.child("comment").getValue().toString();
                     String name = ds.child("name").getValue().toString();
-                    list.add(new InnerForumModel(name,cmnt));
+                    list.add(new InnerForumModel(name, cmnt));
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -124,7 +144,7 @@ public class InnerForumActivity extends AppCompatActivity {
                 adp = new InnerForumAdapter(list, InnerForumActivity.this);
                 listView.setAdapter(adp);
             }
-        },10);
+        }, 10);
 
     }
 
