@@ -39,36 +39,45 @@ public class ResetPassword extends AppCompatActivity {
           mail = mailAddress.getText().toString();
     }
 
+    // 1 -> missinginfo
+    public int control(){
+        if (mail.matches("")) {
+            Toast.makeText(ResetPassword.this, "You did not enter a mail address", Toast.LENGTH_SHORT).show();
+            mailAddress.setError("please enter your mail address");
+            return 1;
+        }
+        return 0;
+    }
+
     public void goMainScreen(){
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 degerAl();
                 auth = FirebaseAuth.getInstance();
-                if (mail.matches("")) {
-                    Toast.makeText(ResetPassword.this, "You did not enter a mail address", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ResetPassword.this, ResetPassword.class));
-                    return ;
-                }
-                if (TextUtils.isEmpty(mail)) {
-                    Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                int missingInfo = control();
+                if(missingInfo == 0){
+                    if (TextUtils.isEmpty(mail)) {
+                        Toast.makeText(getApplication(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                auth.sendPasswordResetEmail(mail)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(ResetPassword.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(),LoginScreen.class);
-                                    startActivity(intent);
-                                } else {
-                                    Toast.makeText(ResetPassword.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                    auth.sendPasswordResetEmail(mail)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(ResetPassword.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(),LoginScreen.class);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(ResetPassword.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
+                            });
+                }
 
-                            }
-                        });
 
             }
         });
