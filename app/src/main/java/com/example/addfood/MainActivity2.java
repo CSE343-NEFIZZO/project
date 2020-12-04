@@ -40,10 +40,11 @@ public class MainActivity2 extends AppCompatActivity {
     Spinner spinner;
     ImageView recipeImage;
     Uri uri;
-    String imageUrl;
+    String imageUrl = "";
     Button mChooseImageBtn, sendRecipeBtn;
     String[] servingCountings = {"Choose", "1-2", "3-4", "5-6", "7-8", "9-10", "11-12", "13-14"};
     ArrayAdapter arrayAdapter;
+    int checkImage = 0;
     private StorageReference mStorageRef;
 
 
@@ -55,22 +56,21 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     private void defineEverything() {
-        foodName = findViewById(R.id.recipeName);
+        foodName = (EditText)findViewById(R.id.recipeName);
         spinner = (Spinner) findViewById(R.id.servings);
-        preparationHour = findViewById(R.id.prepHour);
-        preparationMin = findViewById(R.id.prepMin);
-        cookingHour = findViewById(R.id.cookHour);
-        cookingMin = findViewById(R.id.cookMin);
-        ingredients = findViewById(R.id.ingredientsString);
-        instructions = findViewById(R.id.instructionsString);
+        preparationHour = (EditText)findViewById(R.id.prepHour);
+        preparationMin = (EditText)findViewById(R.id.prepMin);
+        cookingHour = (EditText)findViewById(R.id.cookHour);
+        cookingMin = (EditText)findViewById(R.id.cookMin);
+        ingredients = (EditText)findViewById(R.id.ingredientsString);
+        instructions = (EditText)findViewById(R.id.instructionsString);
         recipeImage = (ImageView) findViewById(R.id.image_view);
-        mChooseImageBtn = findViewById(R.id.chooseImageButton);
+        mChooseImageBtn = (Button)findViewById(R.id.chooseImageButton);
         createAdapter();
         setAdapterToSpinner();
     }
 
     public void SelectImageBtn(View view) {
-
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, 1);
@@ -80,10 +80,13 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+
             uri = data.getData();
             //set image to image view
             recipeImage.setImageURI(uri);
+            checkImage = 1;
         } else Toast.makeText(this, "You have to pick an image!", Toast.LENGTH_LONG).show();
+
     }
 
 
@@ -112,50 +115,82 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     public void UploadRecipeBtn(View view) {
-        uploadImage();
+        //uploadImage();
+        if(foodName.length() == 0){
+            foodName.setError("Please enter a food name ! ");
+        }
+        else if(spinner.getSelectedItem().toString() == "Choose"){
+            Toast.makeText(MainActivity2.this,"Please choose a serving number!",Toast.LENGTH_LONG).show();
+        }
+        else if(preparationHour.length() == 0){
+            preparationHour.setError("Please enter a preparation hour ! ");
+        }
+        else if(preparationMin.length() == 0){
+            preparationMin.setError("Please enter a preparation minute ! ");
+        }
+        else if(cookingHour.length() == 0){
+            cookingHour.setError("Please enter a cooking hour ! ");
+        }
+        else if(cookingMin.length() == 0){
+            cookingMin.setError("Please enter a cooking minute ! ");
+        }
+        else if(ingredients.length() == 0){
+            ingredients.setError("Please enter some ingredients !");
+        }
+        else if(instructions.length() == 0){
+            instructions.setError("Please enter instructions ! ");
+        }
+        else if(checkImage == 0){
+            Toast.makeText(MainActivity2.this,"Please pick an image ! ",Toast.LENGTH_LONG).show();
+        }
+        else uploadImage();
+
+
     }
 
     public void uploadRecipe() {
 
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Recipe Uploading...");
-        progressDialog.show();
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Recipe Uploading...");
+            progressDialog.show();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Members").child("Emir").child("Recipes").child(foodName.getText().toString());
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Members").child("Emir").child("Recipes").child(foodName.getText().toString());
 
 
-        Food foodData = new Food(foodName.getText().toString(),
-                spinner.getSelectedItem().toString(),
-                Integer.parseInt(preparationHour.getText().toString()),
-                Integer.parseInt(preparationMin.getText().toString()),
-                Integer.parseInt(cookingHour.getText().toString()),
-                Integer.parseInt(cookingMin.getText().toString()),
-                ingredients.getText().toString(),
-                instructions.getText().toString(),
-                imageUrl);
+            Food foodData = new Food(foodName.getText().toString(),
+                    spinner.getSelectedItem().toString(),
+                    Integer.parseInt(preparationHour.getText().toString()),
+                    Integer.parseInt(preparationMin.getText().toString()),
+                    Integer.parseInt(cookingHour.getText().toString()),
+                    Integer.parseInt(cookingMin.getText().toString()),
+                    ingredients.getText().toString(),
+                    instructions.getText().toString(),
+                    imageUrl);
 
-        myRef.setValue(foodData).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            myRef.setValue(foodData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
 
-                if(task.isSuccessful()){
-                    Toast.makeText(MainActivity2.this,"Recipe Uploaded",Toast.LENGTH_LONG).show();
-                    progressDialog.dismiss();
-                    finish();
+                    if(task.isSuccessful()){
+                        Toast.makeText(MainActivity2.this,"Recipe Uploaded",Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                        finish();
+                    }
+
                 }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MainActivity2.this,e.getMessage().toString(),Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity2.this,e.getMessage().toString(),Toast.LENGTH_LONG).show();
-            progressDialog.dismiss();
-
-            }
-        });
-
+                }
+            });
+        }
 
 
-    }
+
+
+
 }
