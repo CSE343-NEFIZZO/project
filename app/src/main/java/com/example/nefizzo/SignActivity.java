@@ -1,4 +1,5 @@
-    package com.example.nefizzo;
+package com.example.nefizzo;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +50,15 @@ public class SignActivity extends AppCompatActivity {
     }
 
     public void defineValues(){
+        radiogroupGender = findViewById(R.id.gender);
+        signButton = findViewById(R.id.signButton);
+        username = findViewById(R.id.usernameEditText);
+        name = findViewById(R.id.nameEditText);
+        surname = findViewById(R.id.surnameEditText);
+        password1 = findViewById(R.id.password1);
+        password2 = findViewById(R.id.password2);
+        mail = findViewById(R.id.mailEditText);
+
              radiogroupGender = findViewById(R.id.gender);
              signButton = findViewById(R.id.signButton);
              username = findViewById(R.id.usernameEditText);
@@ -67,18 +77,57 @@ public class SignActivity extends AppCompatActivity {
             return 0;
     }
 
+    //1 -> eksik bilgi var
+    public int control(){
+        if (usernametxt.matches("")) {
+            Toast.makeText(SignActivity.this, "You did not enter a username", Toast.LENGTH_SHORT).show();
+            username.setError("Please enter a username");
+            return 1;
+        }
+        if (nametxt.matches("")) {
+            Toast.makeText(SignActivity.this, "You did not enter a name", Toast.LENGTH_SHORT).show();
+            name.setError("Please enter a name");
+            return 1;
+        }
+        if (surnametxt.matches("")) {
+            Toast.makeText(SignActivity.this, "You did not enter a surname", Toast.LENGTH_SHORT).show();
+            surname.setError("Please enter a surname");
+            return 1;
+        }
+        if (mailtxt.matches("")) {
+            Toast.makeText(SignActivity.this, "You did not enter a mail", Toast.LENGTH_SHORT).show();
+            mail.setError("Please enter a mail address");
+            return 1;
+        }
+        if (passwordtxt1.matches("")) {
+            Toast.makeText(SignActivity.this, "You did not enter a password", Toast.LENGTH_SHORT).show();
+            password1.setError("Please enter a password");
+            return 1;
+        }
+        if (passwordtxt2.matches("")) {
+            Toast.makeText(SignActivity.this, "You did not enter a password", Toast.LENGTH_SHORT).show();
+            password2.setError("Please enter a password");
+            return 1;
+        }
+        return 0;
+    }
+
 
     public void sign(){
         user = mAuth.getCurrentUser();
         signButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                   usernametxt = username.getText().toString();
-                   nametxt = name.getText().toString();
-                   surnametxt = surname.getText().toString();
-                   mailtxt = mail.getText().toString();
-                   passwordtxt1 = password1.getText().toString();
-                   passwordtxt2 = password2.getText().toString();
+                usernametxt = username.getText().toString();
+                nametxt = name.getText().toString();
+                surnametxt = surname.getText().toString();
+                mailtxt = mail.getText().toString();
+                passwordtxt1 = password1.getText().toString();
+                passwordtxt2 = password2.getText().toString();
+
+                // checks empty edit text is exist or not.
+                int missingInfo = control();
+                if(missingInfo == 0){
 
                     int gelenid = radiogroupGender.getCheckedRadioButtonId();
                     if(gelenid == R.id.maleButton){
@@ -137,8 +186,9 @@ public class SignActivity extends AppCompatActivity {
                     });
 
                     if (isFind == 1){
-                    Toast.makeText(SignActivity.this,"Username invalid", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(SignActivity.this, SignActivity.class));
+                        Toast.makeText(SignActivity.this,"Username invalid", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(SignActivity.this, SignActivity.class));
+                    }
                 }
 
             }

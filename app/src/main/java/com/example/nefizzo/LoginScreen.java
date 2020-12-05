@@ -75,24 +75,42 @@ public class LoginScreen extends AppCompatActivity {
                 startActivity(intent);
     }
 
+    public int control(){
+        if (mailtxt.matches("")) {
+            Toast.makeText(LoginScreen.this, "You did not enter a mail", Toast.LENGTH_SHORT).show();
+            mail.setError("Please enter your mail address");
+            return 1;
+        }
+        if (passwordtxt.matches("")) {
+            Toast.makeText(LoginScreen.this, "You did not enter a password", Toast.LENGTH_SHORT).show();
+            password.setError("Please enter your password");
+            return 1;
+        }
+        return 0;
+    }
+
     public void goMainScreen(){
                 degerAl();
                 user = mAuth.getCurrentUser();
-                mAuth.signInWithEmailAndPassword(mailtxt, passwordtxt).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(LoginScreen.this, "You login Succesfully", Toast.LENGTH_LONG).show();
-                       // Intent intent = new Intent(getApplicationContext(), Profile.class);
-                        Intent intent = new Intent(getApplicationContext(), OuterForumActivity.class);
-                        startActivity(intent);
-                    }
+                int missingInfo = control();
+                if(missingInfo == 0){
+                    mAuth.signInWithEmailAndPassword(mailtxt, passwordtxt).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            Toast.makeText(LoginScreen.this, "You login Succesfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), Profile.class);
+                            startActivity(intent);
+                        }
 
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginScreen.this, e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginScreen.this, e.getLocalizedMessage().toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+
     }
 
     public void goSignScreen(){
