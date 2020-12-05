@@ -30,6 +30,19 @@ public class Member {
     private String gender;
 
 
+    public Member() {
+    }
+
+    public Member(String username, String name, String surname, String mailAddress, String password, String gender) {
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.mailAddress = mailAddress;
+        this.password = password;
+        this.gender = gender;
+    }
+
+
     /**
      * That method returns the gender.
      * @return gender
