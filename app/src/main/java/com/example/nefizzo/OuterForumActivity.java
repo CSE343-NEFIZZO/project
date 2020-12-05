@@ -77,8 +77,8 @@ public class OuterForumActivity extends AppCompatActivity {
     }
 
     private void fillList() {
+        forumTitleList.clear();
         forumRef = FirebaseDatabase.getInstance().getReference("Forums");
-
         forumRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
