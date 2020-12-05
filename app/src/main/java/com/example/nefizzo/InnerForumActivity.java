@@ -121,6 +121,7 @@ public class InnerForumActivity extends AppCompatActivity {
     }
 
     private void fillList() {
+        list.clear();
         forumRef = FirebaseDatabase.getInstance().getReference("Forums").child(forumTitle).child("comments");
         forumRef.addValueEventListener(new ValueEventListener() {
             @Override
