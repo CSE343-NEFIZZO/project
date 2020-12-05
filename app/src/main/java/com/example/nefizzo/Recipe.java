@@ -1,6 +1,6 @@
 package com.example.nefizzo;
 
-public class Food {
+public class Recipe {
     private String foodName;
     private String servingNumber;
     private int preparationHour,preparationMin;
@@ -9,7 +9,7 @@ public class Food {
     private String instructions;
     private String itemImage;
 
-    public Food(String foodName, String servingNumber, int preparationHour, int preparationMin, int cookingHour, int cookingMin, String ingredients, String instructions, String itemImage) {
+    public Recipe(String foodName, String servingNumber, int preparationHour, int preparationMin, int cookingHour, int cookingMin, String ingredients, String instructions, String itemImage) {
         this.foodName = foodName;
         this.servingNumber = servingNumber;
         this.preparationHour = preparationHour;

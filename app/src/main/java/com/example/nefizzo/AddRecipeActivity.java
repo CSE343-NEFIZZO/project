@@ -150,7 +150,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             DatabaseReference myRef = database.getReference("Members").child("Emir").child("Recipes").child(foodName.getText().toString());
 
 
-            Food foodData = new Food(foodName.getText().toString(),
+            Recipe recipeData = new Recipe(foodName.getText().toString(),
                     spinner.getSelectedItem().toString(),
                     Integer.parseInt(preparationHour.getText().toString()),
                     Integer.parseInt(preparationMin.getText().toString()),
@@ -160,7 +160,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                     instructions.getText().toString(),
                     imageUrl);
 
-            myRef.setValue(foodData).addOnCompleteListener(new OnCompleteListener<Void>() {
+            myRef.setValue(recipeData).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
