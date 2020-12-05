@@ -1,18 +1,12 @@
 package com.example.addfood;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,9 +25,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import static java.sql.DriverManager.println;
-
-public class MainActivity2 extends AppCompatActivity {
+public class AddRecipeActivity extends AppCompatActivity {
 
     EditText foodName, preparationHour, preparationMin, cookingHour, cookingMin;
     EditText ingredients, instructions;
@@ -51,7 +43,7 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.add_recipe_layout);
         defineEverything();
     }
 
@@ -109,7 +101,7 @@ public class MainActivity2 extends AppCompatActivity {
                 Uri urlImage = uriTask.getResult();
                 imageUrl = urlImage.toString();
                 uploadRecipe();
-                Toast.makeText(MainActivity2.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddRecipeActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -120,7 +112,7 @@ public class MainActivity2 extends AppCompatActivity {
             foodName.setError("Please enter a food name ! ");
         }
         else if(spinner.getSelectedItem().toString() == "Choose"){
-            Toast.makeText(MainActivity2.this,"Please choose a serving number!",Toast.LENGTH_LONG).show();
+            Toast.makeText(AddRecipeActivity.this,"Please choose a serving number!",Toast.LENGTH_LONG).show();
         }
         else if(preparationHour.length() == 0){
             preparationHour.setError("Please enter a preparation hour ! ");
@@ -141,7 +133,7 @@ public class MainActivity2 extends AppCompatActivity {
             instructions.setError("Please enter instructions ! ");
         }
         else if(checkImage == 0){
-            Toast.makeText(MainActivity2.this,"Please pick an image ! ",Toast.LENGTH_LONG).show();
+            Toast.makeText(AddRecipeActivity.this,"Please pick an image ! ",Toast.LENGTH_LONG).show();
         }
         else uploadImage();
 
@@ -173,7 +165,7 @@ public class MainActivity2 extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
 
                     if(task.isSuccessful()){
-                        Toast.makeText(MainActivity2.this,"Recipe Uploaded",Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddRecipeActivity.this,"Recipe Uploaded",Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                         finish();
                     }
@@ -182,7 +174,7 @@ public class MainActivity2 extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(MainActivity2.this,e.getMessage().toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddRecipeActivity.this,e.getMessage().toString(),Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
 
                 }
