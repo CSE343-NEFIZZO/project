@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="#ffcccc"
+    tools:context=".LoginScreen">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/recipe"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        ></ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:background="@drawable/loginlayout"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/user2"
+            ></ImageView>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="5"
+            android:layout_marginLeft="10dp"
+            android:textStyle="italic"
+            android:id="@+id/mailEditText"
+            android:hint="Mail Address"
+            ></EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:background="@drawable/loginlayout"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/password3"
+            ></ImageView>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="5"
+            android:textStyle="italic"
+            android:layout_marginLeft="10dp"
+            android:password="true"
+            android:id="@+id/passwordEditText"
+            android:hint="Password"
+            ></EditText>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/loginlayout"
+        android:id="@+id/loginButton"
+        android:text="Logın"
+        ></Button>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:id="@+id/forgotButton"
+        android:background="@drawable/loginlayout"
+        android:padding="10dp"
+        android:textAllCaps="false"
+        android:textSize="10dp"
+        android:textStyle="italic"
+        android:text="Forgot your Password?"
+        ></Button>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Are you new to Nefizzo? Let's enter the world of Nefizzo..."
+            android:textStyle="italic|bold"
+            android:textSize="15dp"
+            android:textColor="#2c3e50"
+            ></TextView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/createAccountButton"
+            android:background="@drawable/loginlayout"
+            android:padding="10dp"
+            android:textSize="10dp"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textStyle="italic"
+            android:text="Create your account"
+            ></Button>
+
+    </LinearLayout>
+
+
+</LinearLayout>

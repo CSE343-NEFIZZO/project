@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+
+    <color name="cornFlower">#546de5</color>
+    <color name="oldgeranium">#cf6a87</color>
+    <color name="coastalBreeze">#dff9fb</color>
+    <color name="prettyPlease">#ffcccc</color>
+    <color name="kırıkbeyaz">#f1f2f6</color>
+    <color name="gri">#dfe6e9</color>
+
+
+</resources>
