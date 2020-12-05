@@ -35,7 +35,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecipeAdapter.ViewHolder holder, int position) {
         Recipe currentRecipe = list.get(position);
-        holder.recipeName.setText(currentRecipe.getRecipeName());
+        holder.recipeName.setText(currentRecipe.getFoodName());
         Picasso.with(context)
                 .load(currentRecipe.getItemImage())
                 .fit()

@@ -86,13 +86,13 @@ class RecipeTest {
 
     @org.junit.jupiter.api.Test
     void getRecipeName() {
-        assertEquals("test recipe", testRec.getRecipeName());
+        assertEquals("test recipe", testRec.getFoodName());
     }
 
     @org.junit.jupiter.api.Test
     void setRecipeName() {
-        testRec.setRecipeName("new recipe name");
-        assertEquals("new recipe name", testRec.getRecipeName());
+        testRec.setFoodName("new recipe name");
+        assertEquals("new recipe name", testRec.getFoodName());
     }
 
     @org.junit.jupiter.api.Test

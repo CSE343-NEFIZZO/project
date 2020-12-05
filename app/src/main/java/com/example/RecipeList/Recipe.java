@@ -3,7 +3,7 @@ package com.example.RecipeList;
 public class Recipe {
     private int cookingHour;
     private int cookingMin;
-    private String recipeName;
+    private String foodName;
     private String ingredients;
     private String instructions;
     private String itemImage;
@@ -16,7 +16,7 @@ public class Recipe {
                   int preparationHour, int preparationMin, String servingNumber) {
         this.cookingHour = cookingHour;
         this.cookingMin = cookingMin;
-        this.recipeName = recipeName;
+        this.foodName = recipeName;
         this.ingredients = ingredients;
         this.instructions = instructions;
         this.itemImage = itemImage;
@@ -85,12 +85,12 @@ public class Recipe {
         this.servingNumber = servingNumber;
     }
 
-    public String getRecipeName() {
-        return recipeName;
+    public String getFoodName() {
+        return foodName;
     }
 
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
     }
 
     public String getItemImage() {
@@ -106,7 +106,7 @@ public class Recipe {
         return "Recipe{" +
                 "cookingHour=" + cookingHour +
                 ", cookingMin=" + cookingMin +
-                ", foodName='" + recipeName + '\'' +
+                ", foodName='" + foodName + '\'' +
                 ", ingredients='" + ingredients + '\'' +
                 ", instructions='" + instructions + '\'' +
                 ", itemImage='" + itemImage + '\'' +
