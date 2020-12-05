@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Profile"></activity>
+        <activity android:name=".InnerForumActivity"></activity>
+        <activity android:name=".AddForum" />
+        <activity android:name=".OuterForumActivity" />
+        <activity android:name=".Profile" />
         <activity android:name=".SignActivity" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".LoginScreen" />

@@ -50,6 +50,7 @@ public class ResetPassword extends AppCompatActivity {
     }
 
     public void goMainScreen(){
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +78,7 @@ public class ResetPassword extends AppCompatActivity {
                                 }
                             });
                 }
+
 
 
             }

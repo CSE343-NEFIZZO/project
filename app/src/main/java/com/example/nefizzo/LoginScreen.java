@@ -26,6 +26,7 @@ public class LoginScreen extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +109,7 @@ public class LoginScreen extends AppCompatActivity {
                         }
                     });
                 }
+
 
     }
 

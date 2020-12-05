@@ -1,5 +1,6 @@
 package com.example.nefizzo;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,6 +58,15 @@ public class SignActivity extends AppCompatActivity {
         password1 = findViewById(R.id.password1);
         password2 = findViewById(R.id.password2);
         mail = findViewById(R.id.mailEditText);
+
+             radiogroupGender = findViewById(R.id.gender);
+             signButton = findViewById(R.id.signButton);
+             username = findViewById(R.id.usernameEditText);
+             name = findViewById(R.id.nameEditText);
+             surname = findViewById(R.id.surnameEditText);
+             password1 = findViewById(R.id.password1);
+             password2 = findViewById(R.id.password2);
+             mail = findViewById(R.id.mailEditText);
     }
 
 
@@ -118,6 +128,7 @@ public class SignActivity extends AppCompatActivity {
                 // checks empty edit text is exist or not.
                 int missingInfo = control();
                 if(missingInfo == 0){
+
                     int gelenid = radiogroupGender.getCheckedRadioButtonId();
                     if(gelenid == R.id.maleButton){
                         gender = "male";
@@ -179,6 +190,7 @@ public class SignActivity extends AppCompatActivity {
                         startActivity(new Intent(SignActivity.this, SignActivity.class));
                     }
                 }
+
             }
         });
 
