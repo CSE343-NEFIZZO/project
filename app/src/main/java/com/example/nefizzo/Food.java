@@ -1,4 +1,4 @@
-package com.example.addfood;
+package com.example.nefizzo;
 
 public class Food {
     private String foodName;

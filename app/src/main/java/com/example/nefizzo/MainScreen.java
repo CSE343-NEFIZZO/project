@@ -34,6 +34,20 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        addButon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddRecipeActivity.class);
+                startActivity(intent);
+            }
+        });
+        listButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddRecipeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }
