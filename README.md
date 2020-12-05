@@ -1,0 +1,1 @@
+The recipe adding  screen contains many sections. These sections are recipe name, serving portion, preparation and cooking time, recipe description, ingredients and recipe picture. The user may type these section and upload to application.

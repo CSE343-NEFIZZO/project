@@ -8,6 +8,7 @@
   "client": [
     {
       "client_info": {
+
         "mobilesdk_app_id": "1:697097396732:android:b4168be4a07af031ec5279",
         "android_client_info": {
           "package_name": "com.example.nefizzo"
