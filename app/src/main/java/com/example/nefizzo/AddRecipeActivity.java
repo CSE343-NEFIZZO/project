@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,14 +20,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
+    FirebaseAuth firebaseAuth;
+    DatabaseReference usersRef;
+    FirebaseUser user;
     EditText foodName, preparationHour, preparationMin, cookingHour, cookingMin;
     EditText ingredients, instructions;
     Spinner spinner;
@@ -45,6 +54,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_recipe_layout);
         defineEverything();
+
+        //Log.i("asd",user.getEmail().toString());
+
     }
 
     private void defineEverything() {
@@ -58,6 +70,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         instructions = (EditText)findViewById(R.id.instructionsString);
         recipeImage = (ImageView) findViewById(R.id.image_view);
         mChooseImageBtn = (Button)findViewById(R.id.chooseImageButton);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
         createAdapter();
         setAdapterToSpinner();
     }
@@ -90,7 +104,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         spinner.setAdapter(arrayAdapter);
     }
 
-    public void uploadImage() {
+    public void uploadImage(String userName2) {
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("RecipeImages").child(uri.getLastPathSegment());
 
         mStorageRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -100,7 +114,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 while (!uriTask.isComplete()) ;
                 Uri urlImage = uriTask.getResult();
                 imageUrl = urlImage.toString();
-                uploadRecipe();
+                uploadRecipe(userName2);
                 Toast.makeText(AddRecipeActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
             }
         });
@@ -135,19 +149,41 @@ public class AddRecipeActivity extends AppCompatActivity {
         else if(checkImage == 0){
             Toast.makeText(AddRecipeActivity.this,"Please pick an image ! ",Toast.LENGTH_LONG).show();
         }
-        else uploadImage();
+        else{
+            usersRef = FirebaseDatabase.getInstance().getReference("Members");
+            usersRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String userName2;
+                    for (DataSnapshot ds: snapshot.getChildren()){
+                        if(user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())){
+                            userName2 = ds.child("username").getValue().toString();
+                            uploadImage(userName2);
+                            return;
+                        }
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
 
 
     }
 
-    public void uploadRecipe() {
+    public void uploadRecipe(String userName) {
 
             ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Recipe Uploading...");
             progressDialog.show();
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("Members").child("Emir").child("Recipes").child(foodName.getText().toString());
+            DatabaseReference myRef = database.getReference("Members").child(userName).child("Recipes").child(foodName.getText().toString());
 
 
             Recipe recipeData = new Recipe(foodName.getText().toString(),
