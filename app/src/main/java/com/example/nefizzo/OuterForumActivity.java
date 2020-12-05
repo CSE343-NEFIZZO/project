@@ -72,17 +72,17 @@ public class OuterForumActivity extends AppCompatActivity {
                 intent.putExtra("forumTitle", adp.getItem(position).getForumTitle());
                 intent.putExtra("userName", userName);
                 startActivity(intent);
+                fillList();
             }
         });
     }
 
     private void fillList() {
-        forumTitleList.clear();
         forumRef = FirebaseDatabase.getInstance().getReference("Forums");
         forumRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                forumTitleList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String title = "" + ds.child("forumTitle").getValue().toString();
                     OuterForumModel temp = new OuterForumModel(title);

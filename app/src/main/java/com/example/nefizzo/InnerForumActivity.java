@@ -99,8 +99,7 @@ public class InnerForumActivity extends AppCompatActivity {
                 if (comment.equals("")) {
                     Toast.makeText(getApplicationContext(), "Empty comment is not valid.", Toast.LENGTH_LONG).show();
                 }
-
-
+                fillList();
             }
         });
 
@@ -117,15 +116,14 @@ public class InnerForumActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "clicked dislike", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     private void fillList() {
-        list.clear();
         forumRef = FirebaseDatabase.getInstance().getReference("Forums").child(forumTitle).child("comments");
         forumRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String cmnt = ds.child("comment").getValue().toString();
                     String name = ds.child("name").getValue().toString();
