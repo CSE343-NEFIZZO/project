@@ -44,7 +44,7 @@ public class MainScreen extends AppCompatActivity {
         listButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddRecipeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RecipeListActivity.class);
                 startActivity(intent);
             }
         });

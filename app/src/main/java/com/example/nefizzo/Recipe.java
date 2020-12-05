@@ -9,6 +9,8 @@ public class Recipe {
     private String instructions;
     private String itemImage;
 
+    public Recipe(){}
+
     public Recipe(String foodName, String servingNumber, int preparationHour, int preparationMin, int cookingHour, int cookingMin, String ingredients, String instructions, String itemImage) {
         this.foodName = foodName;
         this.servingNumber = servingNumber;
