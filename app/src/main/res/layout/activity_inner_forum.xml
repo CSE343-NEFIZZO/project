@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.forum.MainActivity">
+    android:id="@+id/innerForumLayout"
+    tools:context=".MainActivity">
+
 
     <TextView
         android:id="@+id/forumTitle"
@@ -69,35 +71,10 @@
         android:id="@+id/forumList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/prevnext"
+        android:layout_above="@id/comment"
         android:layout_below="@id/forumView"
         android:background="#fff"></ListView>
 
-    <LinearLayout
-        android:id="@+id/prevnext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/comment"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/prevPageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="gone"
-            android:background="#987653"
-            android:hint="Older Comments"></Button>
-
-        <Button
-            android:id="@+id/nextPageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="gone"
-            android:background="#987653"
-            android:hint="Newer Comments"></Button>
-    </LinearLayout>
 
     <EditText
         android:id="@+id/comment"
@@ -113,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="#468789"
-        android:hint="Send Commend"></Button>
+        android:hint="Send Comment"></Button>
 
 
 </RelativeLayout>

@@ -32,7 +32,7 @@ public class InnerForumActivity extends AppCompatActivity {
     InnerForumAdapter adp;
 
     ListView listView;
-    Button sendButton, prevPageButton, nextPageButton, likeButton, dislikeButton;
+    Button sendButton, likeButton, dislikeButton;
     ImageView forumImage;
     TextView caption, title;
     String forumTitle, username, comment;
@@ -169,8 +169,6 @@ public class InnerForumActivity extends AppCompatActivity {
     private void define() {
         listView = (ListView) findViewById(R.id.forumList);
         sendButton = (Button) findViewById(R.id.sendButton);
-        prevPageButton = (Button) findViewById(R.id.prevPageButton);
-        nextPageButton = (Button) findViewById(R.id.nextPageButton);
         likeButton = (Button) findViewById(R.id.likeButton);
         dislikeButton = (Button) findViewById(R.id.dislikeButton);
         forumImage = (ImageView) findViewById(R.id.forumImage);
@@ -184,8 +182,14 @@ public class InnerForumActivity extends AppCompatActivity {
 
     private void getValue() {
         Bundle intent = getIntent().getExtras();
-        forumTitle = intent.getString("forumTitle");
-        title.setText(forumTitle);
+        if(intent != null) {
+            forumTitle = intent.getString("forumTitle");
+            title.setText(forumTitle);
+        }
+        else{
+            forumTitle = "";
+            caption.setText("");
+        }
     }
 
 }
