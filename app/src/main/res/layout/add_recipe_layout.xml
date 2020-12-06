@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addRecipeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,6 +23,7 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="5dp"
                 android:text="Recipe Name"
+                android:id="@+id/recipeNameTextView"
                 android:textColor="#F60404"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -40,6 +42,7 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
                 android:text="Servings"
+                android:id="@+id/servingsTextView"
                 android:textColor="#F60404"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -54,6 +57,7 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
                 android:text="Preparation Time"
+                android:id="@+id/preparationTimeTextView"
                 android:textColor="#F60404"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -85,6 +89,7 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
                 android:text="Cooking Time"
+                android:id="@+id/cookingTimeTextView"
                 android:textColor="#F60404"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -115,6 +120,7 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
                 android:text="Ingredients"
+                android:id="@+id/ingredientsTextview"
                 android:textColor="#F60404"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -133,6 +139,7 @@
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
                 android:text="Instructions"
+                android:id="@+id/instructionsTextView"
                 android:textColor="#F60404"
                 android:textSize="20dp"
                 android:textStyle="bold" />
