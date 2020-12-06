@@ -32,7 +32,6 @@ public class OuterForumActivity extends AppCompatActivity {
     EditText searchEditTxt;
     List<OuterForumModel> forumTitleList;
 
-    String userName;
     DatabaseReference forumRef;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -52,7 +51,6 @@ public class OuterForumActivity extends AppCompatActivity {
         searchBtn = (Button) findViewById(R.id.searchBtn);
         searchEditTxt = (EditText) findViewById(R.id.searchEditTxt);
         forumTitleList = new ArrayList<>();
-        userName = "halime";
     }
 
     private void click() {
@@ -70,7 +68,6 @@ public class OuterForumActivity extends AppCompatActivity {
                 Toast.makeText(OuterForumActivity.this, adp.getItem(position).getForumTitle(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), InnerForumActivity.class);
                 intent.putExtra("forumTitle", adp.getItem(position).getForumTitle());
-                intent.putExtra("userName", userName);
                 startActivity(intent);
                 fillList();
             }

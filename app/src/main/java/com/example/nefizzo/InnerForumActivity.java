@@ -36,9 +36,10 @@ public class InnerForumActivity extends AppCompatActivity {
     ImageView forumImage;
     TextView caption, title;
     String forumTitle, username, comment;
-    DatabaseReference forumRef;
+    DatabaseReference forumRef,usersRef;
     EditText commentEdtTxt;
-
+    FirebaseUser user;
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +91,32 @@ public class InnerForumActivity extends AppCompatActivity {
             public void onClick(View v) {
                 comment = commentEdtTxt.getText().toString();
                 if (!comment.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Comment sent.", Toast.LENGTH_LONG).show();
-                    forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle + "/comments");
-                    InnerForumModel temp = new InnerForumModel(username, comment);
-                    forumRef.child(comment).setValue(temp);
-                    commentEdtTxt.setText("");
+                    usersRef = FirebaseDatabase.getInstance().getReference("Members");
+                    usersRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot ds: snapshot.getChildren()){
+                                if(user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())){
+                                    username = ds.child("username").getValue().toString();
+                                    Toast.makeText(getApplicationContext(), "Comment sent.", Toast.LENGTH_LONG).show();
+                                    forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle + "/comments");
+                                    InnerForumModel temp = new InnerForumModel(username, comment);
+                                    forumRef.child(comment).setValue(temp);
+                                    commentEdtTxt.setText("");
+                                }
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
                 if (comment.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Empty comment is not valid.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Empty comment is not allowed.", Toast.LENGTH_LONG).show();
                 }
                 fillList();
             }
@@ -159,11 +178,12 @@ public class InnerForumActivity extends AppCompatActivity {
         title = (TextView) findViewById(R.id.forumTitle);
         commentEdtTxt = (EditText) findViewById(R.id.comment);
         list = new ArrayList<InnerForumModel>();
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
     }
 
     private void getValue() {
         Bundle intent = getIntent().getExtras();
-        username = intent.getString("userName");
         forumTitle = intent.getString("forumTitle");
         title.setText(forumTitle);
     }
