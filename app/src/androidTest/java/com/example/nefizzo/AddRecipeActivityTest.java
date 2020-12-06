@@ -1,7 +1,5 @@
 package com.example.nefizzo;
 
-import android.widget.Toast;
-
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.Espresso;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
@@ -97,7 +95,6 @@ public class AddRecipeActivityTest {
         String cookingHour = "1";
         String cookingMin = "45";
         String ingredients = "Egg olive oil pepper";
-        String instructions = "Heat the oil in a medium nonstick skillet over low heat until slightly shimmering, about 5 minutes. ";
 
         Espresso.onView(withId(R.id.recipeName)).perform((typeText(recipeName)));
         Espresso.onView(withId(R.id.recipeName)).perform(typeText(recipeName));
@@ -106,7 +103,6 @@ public class AddRecipeActivityTest {
         Espresso.onView(withId(R.id.cookHour)).perform(typeText(cookingHour));
         Espresso.onView(withId(R.id.cookMin)).perform(typeText(cookingMin));
         Espresso.onView(withId(R.id.ingredientsString)).perform(typeText(ingredients));
-        Espresso.onView(withId(R.id.instructionsString)).perform(typeText(instructions));
     }
 
     @Test
