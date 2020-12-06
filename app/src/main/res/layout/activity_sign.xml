@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
+    android:id="@+id/sign"
     android:background="#ffcccc"
     tools:context=".SignActivity">
 
@@ -95,6 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Gender:"
+                    android:id="@+id/genderText"
                     android:textSize="20dp"
                     android:textStyle="bold|italic"
                     ></TextView>
