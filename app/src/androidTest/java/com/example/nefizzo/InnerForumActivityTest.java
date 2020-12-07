@@ -22,9 +22,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
 
 public class InnerForumActivityTest {
-/*
+
     @Test
-    public void testIsActivityInView(){
+    public void testIsActivityInView() {
         ActivityScenario<InnerForumActivity> activityScenario = ActivityScenario.launch(InnerForumActivity.class);
         onView(withId(R.id.innerForumLayout)).check(matches(isDisplayed()));
     }
@@ -40,8 +40,6 @@ public class InnerForumActivityTest {
         onView(withId(R.id.likeButton)).check(matches(isDisplayed()));
         //test dislike button
         onView(withId(R.id.dislikeButton)).check(matches(isDisplayed()));
-        //test forum image view
-        onView(withId(R.id.forumImage)).check(matches(isDisplayed()));
         //test caption text view
         onView(withId(R.id.caption)).check(matches(isDisplayed()));
         //test forum list view
@@ -53,14 +51,14 @@ public class InnerForumActivityTest {
     }
 
     @Test
-    public void test_emptyComment(){
+    public void test_emptyComment() {
         String comment = "";
         test_editText(comment);
     }
 
     public void test_editText(String comment) {
         try {
-            if(comment.length() == 0){
+            if (comment.length() == 0) {
                 throw new Exception(String.format("Empty Comment"));
             }
 
@@ -72,10 +70,9 @@ public class InnerForumActivityTest {
             Intents.init();
             onView(withId(R.id.sendButton)).perform(scrollTo()).perform(click());
             Intents.release();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             Log.i("exc", e.getMessage());
         }
     }
-*/
+
 }

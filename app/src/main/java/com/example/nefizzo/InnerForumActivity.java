@@ -58,6 +58,7 @@ public class InnerForumActivity extends AppCompatActivity {
         forumRef.child("caption").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue() != null)
                 caption.setText(snapshot.getValue().toString());
             }
 
@@ -71,7 +72,7 @@ public class InnerForumActivity extends AppCompatActivity {
         forumRef.child("imageUrl").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.toString().equals("empty"))
+                if (snapshot.getValue() != null && !snapshot.getValue().toString().equals("empty"))
                     Picasso.get().load(snapshot.getValue().toString()).into(forumImage);
                 else
                     forumImage.setVisibility(View.GONE);
