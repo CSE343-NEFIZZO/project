@@ -41,7 +41,7 @@ public class OuterForumActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outer_forum);
         define();
-        fillList();
+        fillList("");
         click();
     }
 
@@ -69,32 +69,70 @@ public class OuterForumActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), InnerForumActivity.class);
                 intent.putExtra("forumTitle", adp.getItem(position).getForumTitle());
                 startActivity(intent);
-                fillList();
+                fillList("");
+            }
+        });
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = searchEditTxt.getText().toString();
+                fillList(text);
             }
         });
     }
 
-    private void fillList() {
-        forumRef = FirebaseDatabase.getInstance().getReference("Forums");
-        forumRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                forumTitleList.clear();
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    String title = "" + ds.child("forumTitle").getValue().toString();
-                    OuterForumModel temp = new OuterForumModel(title);
-                    forumTitleList.add(temp);
+    private void fillList(String text) {
+        if(text.isEmpty()) {
+            forumRef = FirebaseDatabase.getInstance().getReference("Forums");
+            forumRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    forumTitleList.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String title = "" + ds.child("forumTitle").getValue().toString();
+                        OuterForumModel temp = new OuterForumModel(title);
+                        forumTitleList.add(temp);
+                    }
+                    if (forumTitleList.isEmpty())
+                        Toast.makeText(OuterForumActivity.this, "Forum not found!", Toast.LENGTH_LONG).show();
+                    adp = new OuterForumAdapter(forumTitleList, OuterForumActivity.this);
+                    forumListView.setAdapter(adp);
                 }
-                adp = new OuterForumAdapter(forumTitleList, OuterForumActivity.this);
-                forumListView.setAdapter(adp);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+        }
+        else{
+            forumRef = FirebaseDatabase.getInstance().getReference("Forums");
+            forumRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    forumTitleList.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        if(ds.child("forumTitle").getValue().toString().contains(text)) {
+                            String title = "" + ds.child("forumTitle").getValue().toString();
+                            OuterForumModel temp = new OuterForumModel(title);
+                            forumTitleList.add(temp);
+                        }
+                    }
+                    if (forumTitleList.isEmpty()) {
+                        Toast.makeText(OuterForumActivity.this, "Forum not found!", Toast.LENGTH_LONG).show();
+                        fillList("");
+                    }
+                    adp = new OuterForumAdapter(forumTitleList, OuterForumActivity.this);
+                    forumListView.setAdapter(adp);
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
 }

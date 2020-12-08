@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InnerForumActivityTest {
-    
+
     InnerForumModel comment = new InnerForumModel("username","comment");
 
     @Test
