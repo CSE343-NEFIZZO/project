@@ -45,13 +45,8 @@ public class RecipeListActivity extends AppCompatActivity {
     {
         user = FirebaseAuth.getInstance().getCurrentUser();
         recipeList = new ArrayList<>();
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
-        adapter = new RecipeAdapter(recipeList, getApplicationContext(), username);
-        recyclerView.setAdapter(adapter);
         database = FirebaseDatabase.getInstance();
         usersRef = database.getReference("Members");
-
     }
 
     public void loadRecipes()
@@ -63,9 +58,8 @@ public class RecipeListActivity extends AppCompatActivity {
                 for (DataSnapshot ds: snapshot.getChildren()){
                     if(user.getEmail().equals(ds.child("mailAddress").getValue().toString())){
                         username = ds.child("username").getValue().toString();
-                        Log.i("username: ", username);
                         userRef = database.getReference("Members").child(username).child("Recipes");
-                        load();
+                        load(username);
                         return;
                     }
 
@@ -80,8 +74,12 @@ public class RecipeListActivity extends AppCompatActivity {
         });
     }
 
-    public void load()
+    public void load(String username)
     {
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
+        adapter = new RecipeAdapter(recipeList, getApplicationContext(), username);
+        recyclerView.setAdapter(adapter);
         userRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
