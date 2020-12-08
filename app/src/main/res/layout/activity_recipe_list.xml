@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/activity_recipe_list"
     tools:context="com.example.nefizzo.RecipeListActivity">
 
     <androidx.recyclerview.widget.RecyclerView

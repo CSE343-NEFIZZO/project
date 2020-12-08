@@ -1,5 +1,6 @@
 package com.example.nefizzo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,10 +20,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
     private List<Recipe> list;
     private Context context;
+    private String username;
 
-    public RecipeAdapter(List<Recipe> list, Context context) {
+    public RecipeAdapter(List<Recipe> list, Context context, String username) {
         this.list = list;
         this.context = context;
+        this.username = username;
     }
 
     @NonNull
@@ -31,15 +35,42 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         return new RecipeAdapter.ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe currentRecipe = list.get(position);
         holder.recipeName.setText(currentRecipe.getFoodName());
+        holder.user.setText(username);
+
+        if (currentRecipe.getPreparationHour() == 0) {
+            holder.prepTime.setText("Prep: " + currentRecipe.getPreparationMin() + "m");
+        } else if ((currentRecipe.getPreparationHour() > 0)
+                && (currentRecipe.getPreparationMin() == 0)) {
+            holder.prepTime.setText("Prep: " + currentRecipe.getPreparationHour() + "h");
+        } else {
+            holder.prepTime.setText("Prep: " + currentRecipe.getPreparationHour() + "h "
+                                    + currentRecipe.getPreparationMin() + "m");
+        }
+
+        if (currentRecipe.getCookingHour() == 0) {
+            holder.cookTime.setText("Cook: " + currentRecipe.getCookingMin() + "m");
+        } else if ((currentRecipe.getCookingHour() > 0 )
+                    && (currentRecipe.getCookingMin() == 0)) {
+            holder.cookTime.setText("Cook: " + currentRecipe.getCookingHour() + "h");
+        } else {
+            holder.cookTime.setText("Cook: " + currentRecipe.getCookingHour() + "h "
+                                    + currentRecipe.getCookingMin() + "m");
+        }
+
+        holder.servingNumber.setText("Servings: " + currentRecipe.getServingNumber());
+
         Picasso.get()
                 .load(currentRecipe.getItemImage())
                 .fit()
                 .centerCrop()
                 .into(holder.imageView);
+
+
     }
 
 
@@ -54,12 +85,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     {
         TextView recipeName;
         ImageView imageView;
+        TextView prepTime;
+        TextView cookTime;
+        TextView servingNumber;
+        TextView user;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             recipeName = itemView.findViewById(R.id.recipe_name);
             imageView = itemView.findViewById(R.id.image_view_upload);
+            prepTime = itemView.findViewById(R.id.prep_time);
+            cookTime = itemView.findViewById(R.id.cook_time);
+            servingNumber = itemView.findViewById(R.id.serving_num);
+            user = itemView.findViewById(R.id.inst_text);
         }
     }
 }
