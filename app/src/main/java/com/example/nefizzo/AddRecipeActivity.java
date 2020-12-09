@@ -131,14 +131,14 @@ public class AddRecipeActivity extends AppCompatActivity {
         else if(preparationHour.length() == 0){
             preparationHour.setError("Please enter a preparation hour ! ");
         }
-        else if(preparationMin.length() == 0){
-            preparationMin.setError("Please enter a preparation minute ! ");
+        else if(preparationMin.length() == 0 || (Integer.parseInt(preparationMin.getText().toString()) > 59)){
+            preparationMin.setError("Please enter a appropriate preparation minute ! ");
         }
         else if(cookingHour.length() == 0){
             cookingHour.setError("Please enter a cooking hour ! ");
         }
-        else if(cookingMin.length() == 0){
-            cookingMin.setError("Please enter a cooking minute ! ");
+        else if(cookingMin.length() == 0 || (Integer.parseInt(cookingMin.getText().toString()) > 59)){
+            cookingMin.setError("Please enter a appropriate cooking minute ! ");
         }
         else if(ingredients.length() == 0){
             ingredients.setError("Please enter some ingredients !");

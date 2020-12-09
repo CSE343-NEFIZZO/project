@@ -59,7 +59,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                filter(s.toString());
+                String textArray = s.toString();
+                filter(textArray);
 
             }
         });
@@ -136,15 +137,29 @@ public class SearchActivity extends AppCompatActivity {
 
     private void filter(String givenText) {
         ArrayList<Recipe> filterList = new ArrayList<>();
+        String[] splitWords = givenText.split("\\s+");
+        boolean flag = true;
 
-        for(Recipe item: recipeList){
-            if(item.getFoodName().toLowerCase().contains(givenText.toLowerCase()) ||
-                    item.getIngredients().toLowerCase().contains(givenText.toLowerCase()))
-                filterList.add(item);
-
-
+        if(splitWords.length == 1){
+            for(Recipe item: recipeList){
+                if(item.getFoodName().toLowerCase().contains(givenText.toLowerCase()) ||
+                        item.getIngredients().toLowerCase().contains(givenText.toLowerCase()))
+                    filterList.add(item);
+            }
         }
+        else if(splitWords.length > 1){
+            for(Recipe item: recipeList){
+                flag =true;
+                for(int i=0;i<splitWords.length && flag != false;++i){
 
+                    if(item.getFoodName().toLowerCase().contains(splitWords[i]) ||
+                            item.getIngredients().toLowerCase().contains(splitWords[i]))
+                        flag = true;
+                    else flag = false;
+                }
+                if(flag == true) filterList.add(item);
+            }
+        }
         adapter.filteredList(filterList);
     }
 }
