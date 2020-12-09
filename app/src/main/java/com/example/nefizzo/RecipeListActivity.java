@@ -85,7 +85,6 @@ public class RecipeListActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Recipe rec = snapshot.getValue(Recipe.class);
                 adapter.notifyDataSetChanged();
-                Log.i("getRecipe", rec.toString());
                 recipeList.add(rec);
             }
 
