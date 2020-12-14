@@ -53,6 +53,7 @@ public class Profile extends AppCompatActivity {
     }
 
     public void defineValues(){
+
         username = findViewById(R.id.usernameProfil);
         name = findViewById(R.id.nameProfil);
         surname = findViewById(R.id.surnameProfil);
