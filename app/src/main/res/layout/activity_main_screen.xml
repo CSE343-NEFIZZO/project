@@ -7,7 +7,7 @@
     tools:context=".MainScreen">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:id="@+id/forumButton"
         android:text="forum"
@@ -32,6 +32,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchRecipeBtn"
         android:text="search"
+        ></Button>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profileButton"
+        android:text="profile"
         ></Button>
 
 </LinearLayout>

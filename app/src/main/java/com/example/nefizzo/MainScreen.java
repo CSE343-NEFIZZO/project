@@ -10,7 +10,7 @@ import android.widget.Button;
 
 public class MainScreen extends AppCompatActivity {
 
-    Button addButon,listButton,forumButton,searchButton;
+    Button addButon,listButton,forumButton,searchButton,profileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class MainScreen extends AppCompatActivity {
         addButon = findViewById(R.id.addfoodButton);
         listButton = findViewById(R.id.listFoodButton);
         searchButton = findViewById(R.id.searchRecipeBtn);
+        profileButton = findViewById(R.id.profileButton);
     }
 
     public void send(){
@@ -53,6 +54,14 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        profileButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Profile.class);
                 startActivity(intent);
             }
         });
