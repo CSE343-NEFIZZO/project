@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="#ffcccc"
+    android:background= "#f1f2f6"
     android:id="@+id/loginScreen"
     tools:context=".LoginScreen">
 
@@ -77,14 +77,17 @@
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="10dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/loginlayout"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:background= "@drawable/button"
         android:id="@+id/loginButton"
-        android:text="Logın"
+        android:hint ="Login"
+        android:textColorHint="#ffffff"
         ></Button>
 
     <Button
@@ -93,7 +96,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
         android:id="@+id/forgotButton"
-        android:background="@drawable/loginlayout"
+        android:background="@drawable/button"
+        android:textColor="#ffffff"
         android:padding="10dp"
         android:textAllCaps="false"
         android:textSize="10dp"
@@ -113,7 +117,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:id="@+id/createText"
-            android:text="Are you new in Nefizzo? Let's enter the world of Nefizzo..."
+            android:text="Are you new in Nefizzo? "
             android:textStyle="italic|bold"
             android:textSize="15dp"
             android:textColor="#2c3e50"
@@ -123,13 +127,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/createAccountButton"
-            android:background="@drawable/loginlayout"
+            android:background="@drawable/button"
+            android:textColor="#ffffff"
             android:padding="10dp"
             android:textSize="10dp"
             android:gravity="center"
             android:textAllCaps="false"
             android:textStyle="italic"
-            android:text="Create your account"
+            android:text="Sign Up"
             ></Button>
 
     </LinearLayout>
