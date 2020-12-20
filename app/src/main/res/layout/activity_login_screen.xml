@@ -36,7 +36,6 @@
         android:padding="10dp"
         android:background="@drawable/loginlayout"
         android:orientation="horizontal">
-        
 
 
         <EditText
