@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,6 +40,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="5dp"
                 android:text="Servings"
                 android:id="@+id/servingsTextView"
@@ -56,6 +56,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="5dp"
                 android:text="Preparation Time"
                 android:id="@+id/preparationTimeTextView"
@@ -87,6 +88,7 @@
 
             <TextView
                 android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
                 android:text="Cooking Time"
@@ -120,6 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
                 android:text="Ingredients"
                 android:id="@+id/ingredientsTextview"
                 android:textColor="#487eb0"
@@ -138,6 +141,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="5dp"
                 android:text="Instructions"
                 android:id="@+id/instructionsTextView"
@@ -185,9 +189,7 @@
 
             </LinearLayout>
 
-
-
-
+            
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -196,6 +198,7 @@
                 android:text="Send Recıpe"
                 android:id="@+id/uploadRecipe"
                 android:onClick="UploadRecipeBtn"
+                android:layout_marginBottom="20dp"
                 android:textColor="#ffffff"
                  />
 
