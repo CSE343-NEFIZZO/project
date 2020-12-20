@@ -5,6 +5,7 @@
     android:id="@+id/addRecipeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f1f2f6"
     android:orientation="vertical"
     tools:context=".AddRecipeActivity">
 
@@ -24,7 +25,7 @@
                 android:layout_marginStart="5dp"
                 android:text="Recipe Name"
                 android:id="@+id/recipeNameTextView"
-                android:textColor="#F60404"
+                android:textColor="#487eb0"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp" />
@@ -43,7 +44,7 @@
                 android:layout_marginLeft="5dp"
                 android:text="Servings"
                 android:id="@+id/servingsTextView"
-                android:textColor="#F60404"
+                android:textColor="#487eb0"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -58,7 +59,7 @@
                 android:layout_marginLeft="5dp"
                 android:text="Preparation Time"
                 android:id="@+id/preparationTimeTextView"
-                android:textColor="#F60404"
+                android:textColor="#487eb0"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -90,7 +91,7 @@
                 android:layout_marginLeft="5dp"
                 android:text="Cooking Time"
                 android:id="@+id/cookingTimeTextView"
-                android:textColor="#F60404"
+                android:textColor="#487eb0"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -121,7 +122,7 @@
                 android:layout_marginLeft="5dp"
                 android:text="Ingredients"
                 android:id="@+id/ingredientsTextview"
-                android:textColor="#F60404"
+                android:textColor="#487eb0"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -131,7 +132,7 @@
                 android:layout_height="100dp"
                 android:gravity="left|top"
                 android:padding="10dp"
-                android:background="@drawable/edit_background"
+                android:background="@drawable/loginlayout"
                 android:hint="Please write an item on a line" />
 
             <TextView
@@ -140,7 +141,7 @@
                 android:layout_marginLeft="5dp"
                 android:text="Instructions"
                 android:id="@+id/instructionsTextView"
-                android:textColor="#F60404"
+                android:textColor="#487eb0"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -149,7 +150,7 @@
                 android:layout_height="100dp"
                 android:gravity="left|top"
                 android:padding="10dp"
-                android:background="@drawable/edit_background"
+                android:background="@drawable/loginlayout"
                 android:id="@+id/instructionsString"
                 android:hint="Instructions.." />
 
@@ -175,10 +176,11 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_background"
-                    android:text="Choose image"
+                    android:background="@drawable/button"
+                    android:text="Choose ımage"
                     android:onClick="SelectImageBtn"
-                    app:backgroundTint="#F60404" />
+                    android:textColor="#ffffff"
+                     />
 
 
             </LinearLayout>
@@ -190,12 +192,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/edit_background"
-                android:text="Send Recipe"
+                android:background="@drawable/button"
+                android:text="Send Recıpe"
                 android:id="@+id/uploadRecipe"
                 android:onClick="UploadRecipeBtn"
-                android:textColor="#fff"
-                app:backgroundTint="#F60404" />
+                android:textColor="#ffffff"
+                 />
 
         </LinearLayout>
 
