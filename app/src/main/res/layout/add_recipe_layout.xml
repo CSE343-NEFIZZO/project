@@ -132,7 +132,7 @@
                 android:layout_height="100dp"
                 android:gravity="left|top"
                 android:padding="10dp"
-                android:background="@drawable/loginlayout"
+                android:background="@drawable/frame"
                 android:hint="Please write an item on a line" />
 
             <TextView
@@ -150,7 +150,7 @@
                 android:layout_height="100dp"
                 android:gravity="left|top"
                 android:padding="10dp"
-                android:background="@drawable/loginlayout"
+                android:background="@drawable/frame"
                 android:id="@+id/instructionsString"
                 android:hint="Instructions.." />
 
