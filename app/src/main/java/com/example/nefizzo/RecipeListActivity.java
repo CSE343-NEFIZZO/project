@@ -35,7 +35,6 @@ public class RecipeListActivity extends AppCompatActivity {
     FirebaseUser user;
     String username;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
