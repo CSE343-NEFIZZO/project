@@ -2,18 +2,25 @@ package com.example.nefizzo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
@@ -21,11 +28,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     private List<Recipe> list;
     private Context context;
     private String username;
+    private DatabaseReference userRef;
 
-    public RecipeAdapter(List<Recipe> list, Context context, String username) {
+    public RecipeAdapter(List<Recipe> list, Context context, String username, DatabaseReference userRef) {
         this.list = list;
         this.context = context;
         this.username = username;
+        this.userRef = userRef;
     }
 
     @NonNull
@@ -70,6 +79,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
                 .centerCrop()
                 .into(holder.imageView);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context.getApplicationContext(), RecipeDetailActivity.class);
+                intent.putExtra("recipe", (Serializable) currentRecipe);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -81,7 +99,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         TextView recipeName;
         ImageView imageView;
@@ -89,6 +107,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         TextView cookTime;
         TextView servingNumber;
         TextView user;
+        ImageButton delete_button;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -99,6 +118,27 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             cookTime = itemView.findViewById(R.id.cook_time);
             servingNumber = itemView.findViewById(R.id.serving_num);
             user = itemView.findViewById(R.id.inst_text);
+            delete_button = itemView.findViewById(R.id.delete_button);
+            delete_button.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View v)
+        {
+            if (v == delete_button) {
+                deleteRecipe(getLayoutPosition());
+            }
+        }
+
+        private void deleteRecipe(int position)
+        {
+            Recipe delete_rec = list.get(position);
+            DatabaseReference drRecipe = userRef.child(delete_rec.getFoodName());
+            drRecipe.removeValue();
+            list.clear();
+
+            Toast.makeText(context, "Recipe is deleted", Toast.LENGTH_LONG).show();
         }
     }
 }

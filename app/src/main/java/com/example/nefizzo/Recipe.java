@@ -1,6 +1,11 @@
 package com.example.nefizzo;
 
-public class Recipe {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class Recipe implements Serializable {
     private String foodName;
     private String servingNumber;
     private int preparationHour,preparationMin;
@@ -94,4 +99,5 @@ public class Recipe {
     public void setItemImage(String itemImage) {
         this.itemImage = itemImage;
     }
+
 }

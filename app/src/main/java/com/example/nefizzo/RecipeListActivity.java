@@ -2,6 +2,8 @@ package com.example.nefizzo;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +34,7 @@ public class RecipeListActivity extends AppCompatActivity {
     RecipeAdapter adapter;
     FirebaseUser user;
     String username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +81,10 @@ public class RecipeListActivity extends AppCompatActivity {
     {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
-        adapter = new RecipeAdapter(recipeList, getApplicationContext(), username);
+        adapter = new RecipeAdapter(recipeList, getApplicationContext(), username, userRef);
         recyclerView.setAdapter(adapter);
+
+
         userRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
