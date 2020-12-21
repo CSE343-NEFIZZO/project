@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardCornerRadius="15dp"
-    android:layout_margin="10dp"
     android:elevation="10dp"
+    android:background="#f1f2f6"
     tools:context=".RecipeDetailActivity">
 
     <LinearLayout
@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="5dp"
+        android:background="#f1f2f6"
         tools:layout_editor_absoluteY="1dp">
 
         <ImageView

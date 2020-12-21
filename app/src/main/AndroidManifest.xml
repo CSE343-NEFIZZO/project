@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.nefizzo">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -11,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchAdapter"></activity>
+        <activity android:name=".SearchAdapter"
+            tools:ignore="Instantiatable"></activity>
         <activity android:name=".SearchActivity" />
         <activity android:name=".RecipeListActivity" />
         <activity android:name=".Profile" />
@@ -21,6 +23,7 @@
         <activity android:name=".OuterForumActivity" />
         <activity android:name=".SignActivity" />
         <activity android:name=".ResetPassword" />
+        <activity android:name=".RecipeDetailActivity" />
         <activity android:name=".LoginScreen" />
         <activity android:name=".AddRecipeActivity" />
         <activity android:name=".MainActivity">
