@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,12 +30,13 @@ public class InnerForumActivity extends AppCompatActivity {
     List<InnerForumModel> list;
     InnerForumAdapter adp;
 
+    Boolean permission;
     ListView listView;
     Button sendButton, likeButton, dislikeButton;
     ImageView forumImage;
     TextView caption, title;
     String forumTitle, username, comment;
-    DatabaseReference forumRef,usersRef;
+    DatabaseReference forumRef, forumRef2, usersRef, usersRef2;
     EditText commentEdtTxt;
     FirebaseUser user;
     FirebaseAuth firebaseAuth;
@@ -58,8 +58,8 @@ public class InnerForumActivity extends AppCompatActivity {
         forumRef.child("caption").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue() != null)
-                caption.setText(snapshot.getValue().toString());
+                if (snapshot.getValue() != null)
+                    caption.setText(snapshot.getValue().toString());
             }
 
             @Override
@@ -96,8 +96,8 @@ public class InnerForumActivity extends AppCompatActivity {
                     usersRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot ds: snapshot.getChildren()){
-                                if(user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())){
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                if (user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())) {
                                     username = ds.child("username").getValue().toString();
                                     Toast.makeText(getApplicationContext(), "Comment sent.", Toast.LENGTH_LONG).show();
                                     forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle + "/comments");
@@ -126,16 +126,152 @@ public class InnerForumActivity extends AppCompatActivity {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "clicked like", Toast.LENGTH_LONG).show();
+                usersRef = FirebaseDatabase.getInstance().getReference("Members");
+                usersRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            if (user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())) {
+                                username = ds.child("username").getValue().toString();
+                                checkLikeName(username);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
         dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "clicked dislike", Toast.LENGTH_LONG).show();
+                usersRef = FirebaseDatabase.getInstance().getReference("Members");
+                usersRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            if (user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())) {
+                                username = ds.child("username").getValue().toString();
+                                checkDislikeName(username);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
+    }
+
+    private void checkDislikeName(String username){
+        forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle + "/dislikers");
+        forumRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        if (username.equals(ds.child("name").getValue().toString())) {
+                            permission=false;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (permission){
+                    InnerForumModel temp = new InnerForumModel(username, "disliked");
+                    forumRef.child(username).setValue(temp);
+                    forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
+                    forumRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Integer amount = Integer.parseInt(snapshot.child("dislikeAmount").getValue().toString());
+                            increaseDislike(amount, forumRef);
+                            return;
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "You have already disliked it.", Toast.LENGTH_LONG).show();
+            }
+        }, 10);
+        permission=true;
+    }
+    private void checkLikeName(String username) {
+        forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle + "/likers");
+        forumRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        if (username.equals(ds.child("name").getValue().toString())) {
+                            permission=false;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (permission){
+                    InnerForumModel temp = new InnerForumModel(username, "liked");
+                    forumRef.child(username).setValue(temp);
+                    forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
+                    forumRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Integer amount = Integer.parseInt(snapshot.child("likeAmount").getValue().toString());
+                            increaseLike(amount, forumRef);
+                            return;
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "You have already liked it.", Toast.LENGTH_LONG).show();
+            }
+        }, 10);
+        permission=true;
+    }
+
+    private void increaseLike(Integer amount, DatabaseReference ref) {
+        amount++;
+        ref.child("likeAmount").setValue(amount.toString());
+    }
+    private void increaseDislike(Integer amount, DatabaseReference ref) {
+        amount++;
+        ref.child("dislikeAmount").setValue(amount.toString());
     }
 
     private void fillList() {
@@ -179,15 +315,15 @@ public class InnerForumActivity extends AppCompatActivity {
         list = new ArrayList<InnerForumModel>();
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
+        permission = true;
     }
 
     private void getValue() {
         Bundle intent = getIntent().getExtras();
-        if(intent != null) {
+        if (intent != null) {
             forumTitle = intent.getString("forumTitle");
             title.setText(forumTitle);
-        }
-        else{
+        } else {
             forumTitle = "";
             caption.setText("");
         }

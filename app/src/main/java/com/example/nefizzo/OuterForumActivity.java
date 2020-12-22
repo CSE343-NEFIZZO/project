@@ -25,10 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class OuterForumActivity extends AppCompatActivity {
 
-    Button addbtn;
+    Button addbtn,searchBtn,showForumsBtn;
     ListView forumListView;
     OuterForumAdapter adp;
-    Button searchBtn;
     EditText searchEditTxt;
     List<OuterForumModel> forumTitleList;
 
@@ -41,7 +40,6 @@ public class OuterForumActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outer_forum);
         define();
-        fillList("");
         click();
     }
 
@@ -51,6 +49,7 @@ public class OuterForumActivity extends AppCompatActivity {
         searchBtn = (Button) findViewById(R.id.searchBtn);
         searchEditTxt = (EditText) findViewById(R.id.searchEditTxt);
         forumTitleList = new ArrayList<>();
+        showForumsBtn = (Button) findViewById(R.id.showForumsBtn);
     }
 
     private void click() {
@@ -78,6 +77,13 @@ public class OuterForumActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String text = searchEditTxt.getText().toString();
                 fillList(text);
+            }
+        });
+
+        showForumsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fillList("");
             }
         });
     }

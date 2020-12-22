@@ -5,6 +5,7 @@
     android:id="@+id/outerForumLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background= "#f1f2f6"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -34,11 +35,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#468789"
             android:hint="Add New Forum"
             android:textSize="11dp"
+            android:background= "@drawable/button"
             android:padding="5dp"
-            android:layout_marginRight="8dp">
+            android:layout_marginRight="20dp">
 
         </Button>
 
@@ -49,6 +50,8 @@
         android:layout_below="@id/forumTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:hint="Search for Forum Subject">
 
     </EditText>
@@ -57,18 +60,38 @@
         android:id="@+id/searchBtn"
         android:layout_below="@id/searchEditTxt"
         android:layout_width="match_parent"
-        android:background="#468789"
         android:layout_height="wrap_content"
         android:textSize="20dp"
+        android:background= "@drawable/button"
         android:textColorHint="#fff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
         android:hint="Search">
 
+    </Button>
+
+    <Button
+        android:id="@+id/showForumsBtn"
+        android:layout_below="@id/searchBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:background= "@drawable/button"
+        android:textColorHint="#fff"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:hint="Show all forums">
 
     </Button>
 
     <ListView
-        android:layout_below="@id/searchBtn"
+        android:layout_below="@id/showForumsBtn"
+        android:layout_marginTop="10dp"
         android:clickable="true"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:id="@+id/forumList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
