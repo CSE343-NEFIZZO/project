@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,9 +33,10 @@ public class InnerForumActivity extends AppCompatActivity {
 
     Boolean permission;
     ListView listView;
-    Button sendButton, likeButton, dislikeButton;
+    Button sendButton;
+    ImageButton likeButton, dislikeButton;
     ImageView forumImage;
-    TextView caption, title;
+    TextView caption, title, likeAmnt, dislikeAmnt;
     String forumTitle, username, comment;
     DatabaseReference forumRef, forumRef2, usersRef, usersRef2;
     EditText commentEdtTxt;
@@ -49,6 +51,8 @@ public class InnerForumActivity extends AppCompatActivity {
         getValue();
         setCaption();
         fillList();
+        setLike();
+        setDislike();
         click();
 
     }
@@ -84,6 +88,36 @@ public class InnerForumActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void setLike(){
+        forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
+        forumRef.child("likeAmount").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                likeAmnt.setText(snapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void setDislike(){
+        forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
+        forumRef.child("dislikeAmount").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dislikeAmnt.setText(snapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void click() {
@@ -202,6 +236,7 @@ public class InnerForumActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Integer amount = Integer.parseInt(snapshot.child("dislikeAmount").getValue().toString());
                             increaseDislike(amount, forumRef);
+                            setDislike();
                             return;
                         }
 
@@ -249,6 +284,7 @@ public class InnerForumActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Integer amount = Integer.parseInt(snapshot.child("likeAmount").getValue().toString());
                             increaseLike(amount, forumRef);
+                            setLike();
                             return;
                         }
 
@@ -306,8 +342,8 @@ public class InnerForumActivity extends AppCompatActivity {
     private void define() {
         listView = (ListView) findViewById(R.id.forumList);
         sendButton = (Button) findViewById(R.id.sendButton);
-        likeButton = (Button) findViewById(R.id.likeButton);
-        dislikeButton = (Button) findViewById(R.id.dislikeButton);
+        likeButton = (ImageButton) findViewById(R.id.likeButton);
+        dislikeButton = (ImageButton) findViewById(R.id.dislikeButton);
         forumImage = (ImageView) findViewById(R.id.forumImage);
         caption = (TextView) findViewById(R.id.caption);
         title = (TextView) findViewById(R.id.forumTitle);
@@ -316,6 +352,9 @@ public class InnerForumActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         permission = true;
+        likeAmnt = (TextView) findViewById(R.id.likeAmount);
+        dislikeAmnt = (TextView) findViewById(R.id.dislikeAmount);
+
     }
 
     private void getValue() {

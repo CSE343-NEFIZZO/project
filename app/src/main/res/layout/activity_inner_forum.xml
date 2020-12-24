@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#468789"
+
+        android:textColor="#487eb0"
         android:gravity="center"
         android:text="Forum Title"
         android:textSize="35dp"
@@ -36,17 +37,39 @@
             android:layout_weight="3"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/likeButton"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Like"></Button>
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/likeButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/like"
+                    android:hint="Like"></ImageButton>
+                <TextView
+                    android:id="@+id/likeAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/dislikeButton"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Dislike"></Button>
+                android:orientation="horizontal">
+                <ImageButton
+                    android:background="@drawable/dislike"
+                    android:id="@+id/dislikeButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:hint="Dislike"></ImageButton>
+                <TextView
+                    android:id="@+id/dislikeAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+            </LinearLayout>
+
         </LinearLayout>
 
         <ImageView
@@ -89,7 +112,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#468789"
+        android:background="#487eb0"
+        android:textColor="#f1f2f6"
         android:hint="Send Comment"></Button>
 
 
