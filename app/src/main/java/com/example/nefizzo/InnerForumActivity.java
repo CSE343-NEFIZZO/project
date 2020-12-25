@@ -38,7 +38,7 @@ public class InnerForumActivity extends AppCompatActivity {
     ImageView forumImage;
     TextView caption, title, likeAmnt, dislikeAmnt;
     String forumTitle, username, comment;
-    DatabaseReference forumRef, forumRef2, usersRef, usersRef2;
+    DatabaseReference forumRef, usersRef;
     EditText commentEdtTxt;
     FirebaseUser user;
     FirebaseAuth firebaseAuth;

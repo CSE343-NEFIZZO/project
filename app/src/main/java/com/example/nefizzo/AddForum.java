@@ -56,7 +56,7 @@ public class AddForum extends AppCompatActivity {
         click();
     }
 
-    public void define() {
+    private void define() {
         forumTitleEdt = (EditText) findViewById(R.id.forumTitleEdtTxt);
         captionEdt = (EditText) findViewById(R.id.forumCaptionEdtTxt);
         addBtn = (Button) findViewById(R.id.addNewFrmBtn);
@@ -67,7 +67,7 @@ public class AddForum extends AppCompatActivity {
         user = firebaseAuth.getCurrentUser();
     }
 
-    public void click() {
+    private void click() {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,7 +178,7 @@ public class AddForum extends AppCompatActivity {
 
     }
 
-    public void openGallery() {
+    private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 1903);
     }

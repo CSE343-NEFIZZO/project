@@ -32,8 +32,6 @@ public class OuterForumActivity extends AppCompatActivity {
     List<OuterForumModel> forumTitleList;
 
     DatabaseReference forumRef;
-    private FirebaseAuth mAuth;
-    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
