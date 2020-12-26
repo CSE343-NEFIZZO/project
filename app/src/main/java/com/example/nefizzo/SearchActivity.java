@@ -1,16 +1,15 @@
 package com.example.nefizzo;
 
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -138,7 +137,7 @@ public class SearchActivity extends AppCompatActivity {
     private void filter(String givenText) {
         ArrayList<Recipe> filterList = new ArrayList<>();
         String[] splitWords = givenText.split("\\s+");
-        boolean flag = true;
+        boolean flag;
 
         if(splitWords.length == 1){
             for(Recipe item: recipeList){
@@ -150,14 +149,14 @@ public class SearchActivity extends AppCompatActivity {
         else if(splitWords.length > 1){
             for(Recipe item: recipeList){
                 flag =true;
-                for(int i=0;i<splitWords.length && flag != false;++i){
+                for(int i = 0; i<splitWords.length && flag; ++i){
 
                     if(item.getFoodName().toLowerCase().contains(splitWords[i]) ||
                             item.getIngredients().toLowerCase().contains(splitWords[i]))
                         flag = true;
                     else flag = false;
                 }
-                if(flag == true) filterList.add(item);
+                if(flag) filterList.add(item);
             }
         }
         adapter.filteredList(filterList);

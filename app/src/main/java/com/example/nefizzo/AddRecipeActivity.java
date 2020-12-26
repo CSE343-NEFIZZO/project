@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,9 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
@@ -42,11 +37,10 @@ public class AddRecipeActivity extends AppCompatActivity {
     ImageView recipeImage;
     Uri uri;
     String imageUrl = "";
-    Button mChooseImageBtn, sendRecipeBtn;
+    Button mChooseImageBtn;
     String[] servingCountings = {"Choose", "1-2", "3-4", "5-6", "7-8", "9-10", "11-12", "13-14"};
-    ArrayAdapter arrayAdapter;
+    ArrayAdapter<String> arrayAdapter;
     int checkImage = 0;
-    private StorageReference mStorageRef;
 
 
     @Override
@@ -60,16 +54,16 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
     private void defineEverything() {
-        foodName = (EditText)findViewById(R.id.recipeName);
-        spinner = (Spinner) findViewById(R.id.servings);
-        preparationHour = (EditText)findViewById(R.id.prepHour);
-        preparationMin = (EditText)findViewById(R.id.prepMin);
-        cookingHour = (EditText)findViewById(R.id.cookHour);
-        cookingMin = (EditText)findViewById(R.id.cookMin);
-        ingredients = (EditText)findViewById(R.id.ingredientsString);
-        instructions = (EditText)findViewById(R.id.instructionsString);
-        recipeImage = (ImageView) findViewById(R.id.image_view);
-        mChooseImageBtn = (Button)findViewById(R.id.chooseImageButton);
+        foodName = findViewById(R.id.recipeName);
+        spinner = findViewById(R.id.servings);
+        preparationHour = findViewById(R.id.prepHour);
+        preparationMin = findViewById(R.id.prepMin);
+        cookingHour = findViewById(R.id.cookHour);
+        cookingMin = findViewById(R.id.cookMin);
+        ingredients = findViewById(R.id.ingredientsString);
+        instructions = findViewById(R.id.instructionsString);
+        recipeImage = findViewById(R.id.image_view);
+        mChooseImageBtn = findViewById(R.id.chooseImageButton);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         createAdapter();
@@ -97,7 +91,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
     public void createAdapter() {
-        arrayAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, servingCountings);
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, servingCountings);
     }
 
     public void setAdapterToSpinner() {
@@ -107,16 +101,15 @@ public class AddRecipeActivity extends AppCompatActivity {
     public void uploadImage(String userName2) {
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("RecipeImages").child(uri.getLastPathSegment());
 
-        mStorageRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                while (!uriTask.isComplete()) ;
-                Uri urlImage = uriTask.getResult();
+        mStorageRef.putFile(uri).addOnSuccessListener(taskSnapshot -> {
+            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+            while (!uriTask.isComplete()) ;
+            Uri urlImage = uriTask.getResult();
+            if (urlImage != null) {
                 imageUrl = urlImage.toString();
-                uploadRecipe(userName2);
-                Toast.makeText(AddRecipeActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
             }
+            uploadRecipe(userName2);
+            Toast.makeText(AddRecipeActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -125,7 +118,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         if(foodName.length() == 0){
             foodName.setError("Please enter a food name ! ");
         }
-        else if(spinner.getSelectedItem().toString() == "Choose"){
+        else if(spinner.getSelectedItem().toString().equals("Choose")){
             Toast.makeText(AddRecipeActivity.this,"Please choose a serving number!",Toast.LENGTH_LONG).show();
         }
         else if(preparationHour.length() == 0 || (Integer.parseInt(preparationHour.getText().toString()) > 24)){
@@ -156,7 +149,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String userName2;
                     for (DataSnapshot ds: snapshot.getChildren()){
-                        if(user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())){
+                        if(user.getEmail().equals(ds.child("mailAddress").getValue().toString())){
                             userName2 = ds.child("username").getValue().toString();
                             uploadImage(userName2);
                             return;
@@ -196,24 +189,18 @@ public class AddRecipeActivity extends AppCompatActivity {
                     instructions.getText().toString(),
                     imageUrl);
 
-            myRef.setValue(recipeData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
+            myRef.setValue(recipeData).addOnCompleteListener(task -> {
 
-                    if(task.isSuccessful()){
-                        Toast.makeText(AddRecipeActivity.this,"Recipe Uploaded",Toast.LENGTH_LONG).show();
-                        progressDialog.dismiss();
-                        finish();
-                    }
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(AddRecipeActivity.this,e.getMessage().toString(),Toast.LENGTH_LONG).show();
+                if(task.isSuccessful()){
+                    Toast.makeText(AddRecipeActivity.this,"Recipe Uploaded",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
-
+                    finish();
                 }
+
+            }).addOnFailureListener(e -> {
+                Toast.makeText(AddRecipeActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+
             });
         }
 

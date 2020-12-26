@@ -1,8 +1,5 @@
 package com.example.nefizzo;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 public class Recipe implements Serializable {
