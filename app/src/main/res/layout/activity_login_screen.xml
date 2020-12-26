@@ -88,9 +88,21 @@
 
     <Button
         android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:text="Guest"
+        android:textAllCaps="false"
+        android:textColor="#487eb0"
+        android:id="@+id/guestButton"
+        android:background="@drawable/frame"
+        ></Button>
+
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/forgotButton"
         android:background="@drawable/button"
         android:textColor="#ffffff"

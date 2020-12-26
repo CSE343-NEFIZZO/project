@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginScreen extends AppCompatActivity {
 
-    Button loginButton,forgotButton,createAccountButton;
+    Button loginButton,forgotButton,createAccountButton,guestButton;
     EditText mail,password;
     String mailtxt,passwordtxt;
     private FirebaseAuth mAuth;
@@ -42,6 +43,7 @@ public class LoginScreen extends AppCompatActivity {
             createAccountButton = findViewById(R.id.createAccountButton);
             mail = findViewById(R.id.mailEditText);
             password = findViewById(R.id.passwordEditText);
+            guestButton = findViewById(R.id.guestButton);
     }
 
     public void degerAl(){
@@ -66,6 +68,13 @@ public class LoginScreen extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     goSignScreen();
+                }
+            });
+            guestButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(),RecipeListActivity.class);
+                    startActivity(intent);
                 }
             });
     }
