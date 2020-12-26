@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,9 +29,9 @@ public class Profile extends AppCompatActivity {
     TextView mail,name,surname,username,gender;
     Button recipeButton;
     FirebaseAuth firebaseAuth;
+    ImageView img;
     DatabaseReference usersRef;
     FirebaseUser user;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +55,13 @@ public class Profile extends AppCompatActivity {
     }
 
     public void defineValues(){
-
         username = findViewById(R.id.usernameProfil);
         name = findViewById(R.id.nameProfil);
         surname = findViewById(R.id.surnameProfil);
         mail = findViewById(R.id.mailProfil);
         gender = findViewById(R.id.genderProfil);
         recipeButton = findViewById(R.id.recipes);
+        img = findViewById(R.id.imgview_photo);
     }
 
     public void readData() {
@@ -80,6 +81,12 @@ public class Profile extends AppCompatActivity {
                         surname.setText(bufferSurname);
                         mail.setText(user.getEmail());
                         gender.setText(BufferGender);
+                        if(BufferGender.equals("female")){
+                            img.setImageResource(R.drawable.femaleicon);
+                        }
+                        else if(BufferGender.equals("male")){
+                            img.setImageResource(R.drawable.maleicon);
+                        }
                         return;
                     }
                 }

@@ -23,8 +23,8 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_margin="9dp"
+                android:id="@+id/imgview_photo"
                 android:adjustViewBounds="true"
-                android:background="@drawable/femaleicon"
                 ></ImageView>
 
         </RelativeLayout>
