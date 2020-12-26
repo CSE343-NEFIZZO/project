@@ -125,7 +125,10 @@ public class InnerForumActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 comment = commentEdtTxt.getText().toString();
-                if (!comment.isEmpty()) {
+                if(comment.length() > 150){
+                    Toast.makeText(getApplicationContext(), "Comment's length cannot be longer than 150 character!", Toast.LENGTH_LONG).show();
+                }
+                else if (!comment.isEmpty()) {
                     usersRef = FirebaseDatabase.getInstance().getReference("Members");
                     usersRef.addValueEventListener(new ValueEventListener() {
                         @Override

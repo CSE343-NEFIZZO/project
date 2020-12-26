@@ -73,7 +73,7 @@ public class LoginScreen extends AppCompatActivity {
             guestButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
+                    Intent intent = new Intent(getApplicationContext(),MainScreen.class);
                     startActivity(intent);
                 }
             });

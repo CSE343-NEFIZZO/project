@@ -74,91 +74,97 @@ public class AddForum extends AppCompatActivity {
                 forumTitle = forumTitleEdt.getText().toString();
                 caption = captionEdt.getText().toString();
                 if ((!forumTitle.isEmpty()) && (!caption.isEmpty())) {
-                    forumRef = FirebaseDatabase.getInstance().getReference("Forums");
-                    forumRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            List<String> forumTitleList = new ArrayList<>();
-                            for (DataSnapshot ds : snapshot.getChildren()) {
-                                String txt = "" + ds.child("forumTitle").getValue().toString();
-                                forumTitleList.add(txt);
-                            }
-
-                            for (int i = 0; i < forumTitleList.size(); i++) {
-                                if (forumTitleList.get(i).equals(forumTitle)) {
-                                    isFind = 1;
+                    if (forumTitle.length() > 80) {
+                        Toast.makeText(AddForum.this, "Forum title's length can not be longer than 80 character!", Toast.LENGTH_LONG).show();
+                    } else if (caption.length() > 150) {
+                        Toast.makeText(AddForum.this, "Caption's length can not be longer than 150 character!", Toast.LENGTH_LONG).show();
+                    } else {
+                        forumRef = FirebaseDatabase.getInstance().getReference("Forums");
+                        forumRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                List<String> forumTitleList = new ArrayList<>();
+                                for (DataSnapshot ds : snapshot.getChildren()) {
+                                    String txt = "" + ds.child("forumTitle").getValue().toString();
+                                    forumTitleList.add(txt);
                                 }
-                            }
 
-                            if (isFind == 0) {
-                                if (filePath != null) {  //************************* eğer galeriden foto seçildiyse*************************
-                                    forumTitle = forumTitleEdt.getText().toString();
-                                    String imageTitle = forumTitle.replaceAll(" ", "-");
-                                    StorageReference ref = storageReference.child("ForumImages").child(imageTitle + ".jpg");
-                                    ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            Toast.makeText(AddForum.this, "Forum created!", Toast.LENGTH_LONG).show();
-                                            Task<Uri> temp = taskSnapshot.getMetadata().getReference().getDownloadUrl();
-                                            while (!temp.isComplete()) ;
-                                            String url = temp.getResult().toString();
-                                            usersRef = FirebaseDatabase.getInstance().getReference("Members");
-                                            usersRef.addValueEventListener(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                    for (DataSnapshot ds : snapshot.getChildren()) {
-                                                        if (user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())) {
-                                                            username = ds.child("username").getValue().toString();
-                                                            OuterForumModel newForum = new OuterForumModel(forumTitle, username, caption, url);
-                                                            forumRef.child(forumTitle).setValue(newForum);
-                                                            break;
+                                for (int i = 0; i < forumTitleList.size(); i++) {
+                                    if (forumTitleList.get(i).equals(forumTitle)) {
+                                        isFind = 1;
+                                    }
+                                }
+
+                                if (isFind == 0) {
+                                    if (filePath != null) {  //************************* eğer galeriden foto seçildiyse*************************
+                                        forumTitle = forumTitleEdt.getText().toString();
+                                        String imageTitle = forumTitle.replaceAll(" ", "-");
+                                        StorageReference ref = storageReference.child("ForumImages").child(imageTitle + ".jpg");
+                                        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                Toast.makeText(AddForum.this, "Forum created!", Toast.LENGTH_LONG).show();
+                                                Task<Uri> temp = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                                                while (!temp.isComplete()) ;
+                                                String url = temp.getResult().toString();
+                                                usersRef = FirebaseDatabase.getInstance().getReference("Members");
+                                                usersRef.addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        for (DataSnapshot ds : snapshot.getChildren()) {
+                                                            if (user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())) {
+                                                                username = ds.child("username").getValue().toString();
+                                                                OuterForumModel newForum = new OuterForumModel(forumTitle, username, caption, url);
+                                                                forumRef.child(forumTitle).setValue(newForum);
+                                                                break;
+                                                            }
                                                         }
                                                     }
-                                                }
 
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
 
-                                                }
-                                            });
-                                        }
-                                    });
-                                } else {
-                                    usersRef = FirebaseDatabase.getInstance().getReference("Members");
-                                    usersRef.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            for (DataSnapshot ds : snapshot.getChildren()) {
-                                                if (user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())) {
-                                                    username = ds.child("username").getValue().toString();
-                                                    Toast.makeText(AddForum.this, "Forum created!", Toast.LENGTH_LONG).show();
-                                                    OuterForumModel newForum = new OuterForumModel(forumTitle, username, caption, "empty");
-                                                    forumRef.child(forumTitle).setValue(newForum);
-                                                    break;
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    } else {
+                                        usersRef = FirebaseDatabase.getInstance().getReference("Members");
+                                        usersRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for (DataSnapshot ds : snapshot.getChildren()) {
+                                                    if (user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())) {
+                                                        username = ds.child("username").getValue().toString();
+                                                        Toast.makeText(AddForum.this, "Forum created!", Toast.LENGTH_LONG).show();
+                                                        OuterForumModel newForum = new OuterForumModel(forumTitle, username, caption, "empty");
+                                                        forumRef.child(forumTitle).setValue(newForum);
+                                                        break;
+                                                    }
                                                 }
                                             }
-                                        }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                        }
-                                    });
+                                            }
+                                        });
+                                    }
+                                    Intent intent = new Intent(AddForum.this, OuterForumActivity.class);
+                                    startActivity(intent);
                                 }
-                                Intent intent = new Intent(AddForum.this, OuterForumActivity.class);
-                                startActivity(intent);
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
+                            }
+                        });
+                        if (isFind == 1) {
+                            Toast.makeText(AddForum.this, "This forum title already exists!", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(AddForum.this, AddForum.class);
+                            startActivity(intent);
                         }
-                    });
-                    if (isFind == 1) {
-                        Toast.makeText(AddForum.this, "This forum title already exists!", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(AddForum.this, AddForum.class);
-                        startActivity(intent);
                     }
                 } else if (forumTitle.isEmpty()) {
                     Toast.makeText(AddForum.this, "Enter a forum title!", Toast.LENGTH_LONG).show();
