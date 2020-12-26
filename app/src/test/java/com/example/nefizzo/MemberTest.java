@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MemberTest {
 
-    Member testMember = new Member("Elif","Elif","Goral","elif-goral99@hotmail.com","123456","female");
+    Member testMember = new Member("Elif","Elif","Goral","elif-goral99@hotmail.com","female");
 
     @org.junit.jupiter.api.Test
     void getGender() {
@@ -61,14 +61,4 @@ class MemberTest {
         assertEquals("newMail",testMember.getMailAddress());
     }
 
-    @org.junit.jupiter.api.Test
-    void getPassword() {
-        assertEquals("123456",testMember.getPassword());
-    }
-
-    @org.junit.jupiter.api.Test
-    void setPassword() {
-        testMember.setPassword("newPass");
-        assertEquals("newPass",testMember.getPassword());
-    }
 }

@@ -6,9 +6,9 @@ import static org.junit.Assert.*;
 
 public class LoginScreenTest {
 
-    Member mem = new Member("username","name","surname","mail@hotmail.com","123456","female");
-    Member notExistMember = new Member("elif","elif","elif","elif@hotmail.com","789789","female");
-    Member existMember = new Member("username","name","surname","mail@hotmail.com","123456","female");
+    Member mem = new Member("username","name","surname","mail@hotmail.com","female");
+    Member notExistMember = new Member("elif","elif","elif","elif@hotmail.com","female");
+    Member existMember = new Member("username","name","surname","mail@hotmail.com","female");
 
     @Test
     public void test_empty_mail(){
@@ -47,20 +47,17 @@ public class LoginScreenTest {
     }
     @Test
     public void test_empty_password(){
-        mem.setPassword("");
         String mail = "";
-        assertEquals(mail,mem.getPassword());
+        assertEquals(mail,"");
     }
 
     @Test
     public void test_member_is_exist(){
-        assertEquals(existMember.getPassword(),mem.getPassword());
         assertEquals(existMember.getMailAddress(),mem.getMailAddress());
     }
 
     @Test
     public void test_member_is_not_exist(){
-        assertNotEquals(notExistMember.getPassword(),mem.getPassword());
         assertNotEquals(notExistMember.getMailAddress(),mem.getMailAddress());
     }
 }

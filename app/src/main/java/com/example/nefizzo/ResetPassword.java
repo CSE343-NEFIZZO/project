@@ -26,16 +26,16 @@ public class ResetPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
-        tanimla();
+        defineValues();
         goMainScreen();
     }
 
-    public void tanimla(){
+    public void defineValues(){
             mailAddress = findViewById(R.id.mailAddressEditText);
             sendButton = findViewById(R.id.sendButton);
     }
 
-    public void degerAl(){
+    public void setValue(){
           mail = mailAddress.getText().toString();
     }
 
@@ -54,7 +54,7 @@ public class ResetPassword extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                degerAl();
+                setValue();
                 auth = FirebaseAuth.getInstance();
                 int missingInfo = control();
                 if(missingInfo == 0){

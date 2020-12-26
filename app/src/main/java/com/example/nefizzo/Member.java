@@ -33,12 +33,11 @@ public class Member {
     public Member() {
     }
 
-    public Member(String username, String name, String surname, String mailAddress, String password, String gender) {
+    public Member(String username, String name, String surname, String mailAddress, String gender) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.mailAddress = mailAddress;
-        this.password = password;
         this.gender = gender;
     }
 
@@ -124,21 +123,6 @@ public class Member {
         this.mailAddress = mailAddress;
     }
 
-    /**
-     * That method returns the password.
-     * @return password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * That method sets the password.
-     * @param password member's password
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 
 }

@@ -167,7 +167,6 @@ public class SignActivity extends AppCompatActivity {
                                             Member member = new Member();
                                             member.setMailAddress(mailtxt);
                                             member.setName(nametxt);
-                                            member.setPassword(passwordtxt1);
                                             member.setSurname(surnametxt);
                                             member.setUsername(usernametxt);
                                             member.setGender(gender);

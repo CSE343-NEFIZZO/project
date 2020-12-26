@@ -27,18 +27,18 @@ public class LoginScreenTest {
     List<Member> list = new ArrayList<>();
 
     public void defineList(){
-        Member mem1 = new Member("Nesli","Nesli","Nesli","nesli@hotmail.com","456456","female");
-        Member mem2 = new Member("Levo","Levo","Levo","levo@hotmail.com","111111","male");
-        Member mem3 = new Member("elif","elif","elif","elif@hotmail.com","789789","female");
+        Member mem1 = new Member("Nesli","Nesli","Nesli","nesli@hotmail.com","female");
+        Member mem2 = new Member("Levo","Levo","Levo","levo@hotmail.com","male");
+        Member mem3 = new Member("elif","elif","elif","elif@hotmail.com","female");
         list.add(mem1);
         list.add(mem2);
         list.add(mem3);
     }
 
-    public boolean isMember(String mail,String pass){
+    public boolean isMember(String mail){
         defineList();
         for(int i = 0 ; i < list.size(); i++){
-            if(list.get(i).getMailAddress()==mail && list.get(i).getPassword()== pass)
+            if(list.get(i).getMailAddress()==mail)
                 return true;
         }
         return false;
@@ -112,7 +112,7 @@ public class LoginScreenTest {
         ActivityScenario<LoginScreen> activitySenario = ActivityScenario.launch(LoginScreen.class);
         onView(withId(R.id.loginScreen)).check(matches(isDisplayed()));
 
-        boolean isMem = isMember(mail,pass);
+        boolean isMem = isMember(mail);
         String s1=Boolean.toString(isMem);
 
         try{
@@ -122,7 +122,7 @@ public class LoginScreenTest {
             else if(pass.length() == 0){
                 throw new Exception(String.format("empty password"));
             }
-            else if(isMail(mail) == true && isMember(mail,pass) == true){
+            else if(isMail(mail) == true && isMember(mail) == true){
                 Espresso.onView(withId(R.id.mailEditText)).perform(typeText(mail));
                 Espresso.onView(withId(R.id.passwordEditText)).perform(typeText(pass));
                 Intents.init();
@@ -132,7 +132,7 @@ public class LoginScreenTest {
             else if(isMail(mail) == false){
                 throw new Exception(String.format("Mail has badly format!"));
             }
-            else if(isMember(mail,pass) == false){
+            else if(isMember(mail) == false){
                 throw new Exception(String.format("user does not exist"));
             }
         }

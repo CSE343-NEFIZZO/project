@@ -27,9 +27,9 @@ public class SignActivityTest {
     List<Member> list = new ArrayList<>();
 
     public void defineList(){
-        Member mem1 = new Member("Nesli","Nesli","Nesli","nesli@hotmail.com","456456","female");
-        Member mem2 = new Member("Levo","Levo","Levo","levo@hotmail.com","111111","male");
-        Member mem3 = new Member("elif","elif","elif","elif@hotmail.com","789789","female");
+        Member mem1 = new Member("Nesli","Nesli","Nesli","nesli@hotmail.com","female");
+        Member mem2 = new Member("Levo","Levo","Levo","levo@hotmail.com","male");
+        Member mem3 = new Member("elif","elif","elif","elif@hotmail.com","female");
         list.add(mem1);
         list.add(mem2);
         list.add(mem3);

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 
 public class SignActivityTest {
 
-    Member mem = new Member("username","name","surname","mail@hotmail.com","123456","female");
+    Member mem = new Member("username","name","surname","mail@hotmail.com","female");
 
     @Test
     public void test_empty_username(){

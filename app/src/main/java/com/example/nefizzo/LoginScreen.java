@@ -33,11 +33,11 @@ public class LoginScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         mAuth = FirebaseAuth.getInstance();
-        tanimla();
+        defineValues();
         goNewActivity();
     }
 
-    public void tanimla(){
+    public void defineValues(){
             loginButton = findViewById(R.id.loginButton);
             forgotButton = findViewById(R.id.forgotButton);
             createAccountButton = findViewById(R.id.createAccountButton);
@@ -46,7 +46,7 @@ public class LoginScreen extends AppCompatActivity {
             guestButton = findViewById(R.id.guestButton);
     }
 
-    public void degerAl(){
+    public void setValues(){
             mailtxt = mail.getText().toString();
             passwordtxt = password.getText().toString();
     }
@@ -99,7 +99,7 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     public void goMainScreen(){
-                degerAl();
+                setValues();
                 user = mAuth.getCurrentUser();
                 int missingInfo = control();
                 if(missingInfo == 0){
