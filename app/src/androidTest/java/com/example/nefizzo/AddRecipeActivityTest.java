@@ -13,7 +13,9 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(AndroidJUnit4ClassRunner.class)
@@ -117,15 +119,36 @@ public class AddRecipeActivityTest {
         }
         if(testFood.getPreparationHour() != 0){
             assertNotEquals(0,testFood.getPreparationHour());
+            int prephour = 58;
+            testFood.setCookingHour(prephour);
+            if(testFood.getCookingHour() > 24){
+                assertTrue("This will fail",true);
+            }
         }
         if(testFood.getPreparationMin() != 0){
             assertNotEquals(0,testFood.getPreparationMin());
+            int prepMin = 67;
+            testFood.setPreparationMin(prepMin);
+            if(testFood.getPreparationMin() > 59){
+                assertTrue("This will fail",true);
+            }
         }
+
         if(testFood.getCookingHour() != 0){
             assertNotEquals(0,testFood.getCookingHour());
+            int cookHour = 58;
+            testFood.setCookingHour(cookHour);
+            if(testFood.getCookingHour() > 24){
+                assertTrue("This will fail",true);
+            }
         }
         if(testFood.getCookingMin() != 0){
             assertNotEquals(0,testFood.getCookingMin());
+            int cookMin = 458;
+            testFood.setPreparationMin(cookMin);
+            if(testFood.getPreparationMin() > 59){
+                assertTrue("This will fail",true);
+            }
         }
         if(testFood.getIngredients().length() != 0){
             assertNotEquals(0,testFood.getIngredients().length());

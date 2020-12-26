@@ -66,7 +66,7 @@ public class LoginScreenTest {
             ActivityScenario<LoginScreen> activitySenario = ActivityScenario.launch(LoginScreen.class);
             //it controls interface elements' visibility
             //test imagewiew
-            onView(withId(R.id.imageviewLogin)).check(matches(isDisplayed()));
+            onView(withId(R.id.nefizzologo)).check(matches(isDisplayed()));
 
             // test mail address edit text
             onView(withId(R.id.mailEditText)).check(matches(isDisplayed()));
@@ -86,11 +86,6 @@ public class LoginScreenTest {
             // test createText
             onView(withId(R.id.createText)).check(matches(isDisplayed()));
 
-            //test imgUsr
-            onView(withId(R.id.imgUsr)).check(matches(isDisplayed()));
-
-            //test imgPass
-            onView(withId(R.id.imgPass)).check(matches(isDisplayed()));
 
             /*
                // alternative of onView(withId(R.id.createAccountButton)).check(matches(isDisplayed()));

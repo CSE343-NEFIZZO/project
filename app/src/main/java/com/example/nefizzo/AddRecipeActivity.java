@@ -128,17 +128,17 @@ public class AddRecipeActivity extends AppCompatActivity {
         else if(spinner.getSelectedItem().toString() == "Choose"){
             Toast.makeText(AddRecipeActivity.this,"Please choose a serving number!",Toast.LENGTH_LONG).show();
         }
-        else if(preparationHour.length() == 0){
-            preparationHour.setError("Please enter a preparation hour ! ");
+        else if(preparationHour.length() == 0 || (Integer.parseInt(preparationHour.getText().toString()) > 24)){
+            preparationHour.setError("Please enter an appropriate preparation hour ! ");
         }
         else if(preparationMin.length() == 0 || (Integer.parseInt(preparationMin.getText().toString()) > 59)){
-            preparationMin.setError("Please enter a appropriate preparation minute ! ");
+            preparationMin.setError("Please enter an appropriate preparation minute ! ");
         }
-        else if(cookingHour.length() == 0){
-            cookingHour.setError("Please enter a cooking hour ! ");
+        else if(cookingHour.length() == 0 || (Integer.parseInt(cookingHour.getText().toString()) > 24)){
+            cookingHour.setError("Please enter an appropriate cooking hour ! ");
         }
         else if(cookingMin.length() == 0 || (Integer.parseInt(cookingMin.getText().toString()) > 59)){
-            cookingMin.setError("Please enter a appropriate cooking minute ! ");
+            cookingMin.setError("Please enter an appropriate cooking minute ! ");
         }
         else if(ingredients.length() == 0){
             ingredients.setError("Please enter some ingredients !");
