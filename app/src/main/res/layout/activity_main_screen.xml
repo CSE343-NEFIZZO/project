@@ -4,40 +4,53 @@
     android:layout_width="match_parent"
     android:id="@+id/main"
     android:layout_height="match_parent"
+    android:background="@drawable/frame"
+    android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".MainScreen">
 
     <Button
-        android:layout_width="60dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/forumButton"
+        android:background="@drawable/frame"
         android:text="forum"
         ></Button>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/addfoodButton"
+        android:background="@drawable/frame"
         android:text="add food"
         ></Button>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listFoodButton"
-        android:text="list food"
+        android:background="@drawable/frame"
+        android:text="LIST FOOD"
         ></Button>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchRecipeBtn"
+        android:background="@drawable/frame"
         android:text="search"
         ></Button>
     <Button
-        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/profileButton"
-        android:text="profile"
+        android:background="@drawable/frame"
+        android:text="PROFILE"
         ></Button>
 
 </LinearLayout>
