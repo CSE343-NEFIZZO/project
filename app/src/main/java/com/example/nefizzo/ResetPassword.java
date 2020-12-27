@@ -68,11 +68,11 @@ public class ResetPassword extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(ResetPassword.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ResetPassword.this, "We have sent you instructions to reset your password!", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(getApplicationContext(),LoginScreen.class);
                                         startActivity(intent);
                                     } else {
-                                        Toast.makeText(ResetPassword.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ResetPassword.this, "Failed to send reset email!", Toast.LENGTH_LONG).show();
                                     }
 
                                 }

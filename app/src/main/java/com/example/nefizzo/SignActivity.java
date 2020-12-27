@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +39,6 @@ public class SignActivity extends AppCompatActivity {
     private FirebaseUser user;
     DatabaseReference signRef;
     public int isFind = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +112,15 @@ public class SignActivity extends AppCompatActivity {
         return 0;
     }
 
+    public int test_true_format_mail(String mail){
+        if(mail.contains("@hotmail.com")){
+            return 1;
+        }
+        if(mail.contains("@gmail.com")){
+            return 1;
+        }
+        return 0;
+    }
 
     public void sign(){
         user = mAuth.getCurrentUser();
@@ -161,19 +170,24 @@ public class SignActivity extends AppCompatActivity {
                                     startActivity(new Intent(SignActivity.this, SignActivity.class));
                                 }
                                 if(passwordsFit(passwordtxt1,passwordtxt2) == 1){
-                                    mAuth.createUserWithEmailAndPassword(mailtxt,passwordtxt1).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                        @Override
-                                        public void onSuccess(AuthResult authResult) {
-                                            Member member = new Member();
-                                            member.setMailAddress(mailtxt);
-                                            member.setName(nametxt);
-                                            member.setSurname(surnametxt);
-                                            member.setUsername(usernametxt);
-                                            member.setGender(gender);
-                                            signRef.child(usernametxt).setValue(member);
-                                            startActivity(new Intent(SignActivity.this, LoginScreen.class));
-                                        }
-                                    });
+                                    if(test_true_format_mail(mailtxt)==1){
+                                        mAuth.createUserWithEmailAndPassword(mailtxt,passwordtxt1).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                            @Override
+                                            public void onSuccess(AuthResult authResult) {
+                                                Member member = new Member();
+                                                member.setMailAddress(mailtxt);
+                                                member.setName(nametxt);
+                                                member.setSurname(surnametxt);
+                                                member.setUsername(usernametxt);
+                                                member.setGender(gender);
+                                                signRef.child(usernametxt).setValue(member);
+                                                startActivity(new Intent(SignActivity.this, LoginScreen.class));
+                                            }
+                                        });
+                                    }
+                                    else{
+                                        Toast.makeText(SignActivity.this,"mail address is baddly formatted.", Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             }
                         }
@@ -186,8 +200,8 @@ public class SignActivity extends AppCompatActivity {
 
                     if (isFind == 1){
                         Toast.makeText(SignActivity.this,"Username invalid", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(SignActivity.this, SignActivity.class));
                     }
+
                 }
 
             }
