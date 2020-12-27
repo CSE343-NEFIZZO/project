@@ -73,6 +73,7 @@ public class LoginScreen extends AppCompatActivity {
             guestButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    mAuth.signOut();
                     Intent intent = new Intent(getApplicationContext(),MainScreen.class);
                     startActivity(intent);
                 }

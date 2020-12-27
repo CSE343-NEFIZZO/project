@@ -90,12 +90,12 @@ public class InnerForumActivity extends AppCompatActivity {
 
     }
 
-    private void setLike(){
+    private void setLike() {
         forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
         forumRef.child("likeAmount").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue() != null)
+                if (snapshot.getValue() != null)
                     likeAmnt.setText(snapshot.getValue().toString());
             }
 
@@ -106,12 +106,12 @@ public class InnerForumActivity extends AppCompatActivity {
         });
     }
 
-    private void setDislike(){
+    private void setDislike() {
         forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
         forumRef.child("dislikeAmount").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue() != null)
+                if (snapshot.getValue() != null)
                     dislikeAmnt.setText(snapshot.getValue().toString());
             }
 
@@ -127,10 +127,11 @@ public class InnerForumActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 comment = commentEdtTxt.getText().toString();
-                if(comment.length() > 150){
+                if (user == null) {
+                    Toast.makeText(getApplicationContext(), "You need to sign in to add comment!", Toast.LENGTH_LONG).show();
+                } else if (comment.length() > 150) {
                     Toast.makeText(getApplicationContext(), "Comment's length cannot be longer than 150 character!", Toast.LENGTH_LONG).show();
-                }
-                else if (!comment.isEmpty()) {
+                } else if (!comment.isEmpty()) {
                     usersRef = FirebaseDatabase.getInstance().getReference("Members");
                     usersRef.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -165,29 +166,36 @@ public class InnerForumActivity extends AppCompatActivity {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                usersRef = FirebaseDatabase.getInstance().getReference("Members");
-                usersRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            if (user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())) {
-                                username = ds.child("username").getValue().toString();
-                                checkLikeName(username);
+                if (user == null) {
+                    Toast.makeText(getApplicationContext(), "You need to sign in to like!", Toast.LENGTH_LONG).show();
+                } else {
+                    usersRef = FirebaseDatabase.getInstance().getReference("Members");
+                    usersRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                if (user.getEmail().toString().equals(ds.child("mailAddress").getValue().toString())) {
+                                    username = ds.child("username").getValue().toString();
+                                    checkLikeName(username);
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
         });
 
         dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (user == null) {
+                    Toast.makeText(getApplicationContext(), "You need to sign in to dislike!", Toast.LENGTH_LONG).show();
+                } else{
                 usersRef = FirebaseDatabase.getInstance().getReference("Members");
                 usersRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -206,10 +214,11 @@ public class InnerForumActivity extends AppCompatActivity {
                     }
                 });
             }
+        }
         });
     }
 
-    private void checkDislikeName(String username){
+    private void checkDislikeName(String username) {
         forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle + "/dislikers");
         forumRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -217,7 +226,7 @@ public class InnerForumActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         if (username.equals(ds.child("name").getValue().toString())) {
-                            permission=false;
+                            permission = false;
                         }
                     }
                 }
@@ -232,7 +241,7 @@ public class InnerForumActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (permission){
+                if (permission) {
                     InnerForumModel temp = new InnerForumModel(username, "disliked");
                     forumRef.child(username).setValue(temp);
                     forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
@@ -250,13 +259,13 @@ public class InnerForumActivity extends AppCompatActivity {
 
                         }
                     });
-                }
-                else
+                } else
                     Toast.makeText(getApplicationContext(), "You have already disliked it.", Toast.LENGTH_LONG).show();
             }
         }, 10);
-        permission=true;
+        permission = true;
     }
+
     private void checkLikeName(String username) {
         forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle + "/likers");
         forumRef.addValueEventListener(new ValueEventListener() {
@@ -265,7 +274,7 @@ public class InnerForumActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         if (username.equals(ds.child("name").getValue().toString())) {
-                            permission=false;
+                            permission = false;
                         }
                     }
                 }
@@ -280,7 +289,7 @@ public class InnerForumActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (permission){
+                if (permission) {
                     InnerForumModel temp = new InnerForumModel(username, "liked");
                     forumRef.child(username).setValue(temp);
                     forumRef = FirebaseDatabase.getInstance().getReference("Forums/" + forumTitle);
@@ -298,18 +307,18 @@ public class InnerForumActivity extends AppCompatActivity {
 
                         }
                     });
-                }
-                else
+                } else
                     Toast.makeText(getApplicationContext(), "You have already liked it.", Toast.LENGTH_LONG).show();
             }
         }, 10);
-        permission=true;
+        permission = true;
     }
 
     private void increaseLike(Integer amount, DatabaseReference ref) {
         amount++;
         ref.child("likeAmount").setValue(amount.toString());
     }
+
     private void increaseDislike(Integer amount, DatabaseReference ref) {
         amount++;
         ref.child("dislikeAmount").setValue(amount.toString());
