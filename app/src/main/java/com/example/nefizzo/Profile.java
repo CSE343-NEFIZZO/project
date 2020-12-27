@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +33,7 @@ public class Profile extends AppCompatActivity {
     ImageView img;
     DatabaseReference usersRef;
     FirebaseUser user;
+    boolean hasRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,13 @@ public class Profile extends AppCompatActivity {
         recipeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RecipeListActivity.class);
-                startActivity(intent);
+                if (hasRecipe) {
+                    Intent intent = new Intent(getApplicationContext(), RecipeListActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "You have no recipe.",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -87,6 +94,7 @@ public class Profile extends AppCompatActivity {
                         else if(BufferGender.equals("male")){
                             img.setImageResource(R.drawable.maleicon);
                         }
+                        hasRecipe = ds.hasChild("Recipes");
                         return;
                     }
                 }

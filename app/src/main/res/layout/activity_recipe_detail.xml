@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:cardCornerRadius="15dp"
+    android:id="@+id/recipe_detail"
     android:elevation="10dp"
     android:background="#f1f2f6"
     tools:context=".RecipeDetailActivity">
@@ -57,6 +58,7 @@
             android:text="@string/servings" />
 
         <TextView
+            android:id="@id/rd_ing_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -71,6 +73,7 @@
             android:layout_marginStart="12dp"/>
 
         <TextView
+            android:id="@+id/rd_inst_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"

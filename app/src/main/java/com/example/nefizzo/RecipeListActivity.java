@@ -1,9 +1,10 @@
-package com.example.nefizzo;
+ package com.example.nefizzo;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,7 +63,6 @@ public class RecipeListActivity extends AppCompatActivity {
                         username = ds.child("username").getValue().toString();
                         userRef = database.getReference("Members").child(username).child("Recipes");
                         load(username);
-                        return;
                     }
 
                 }
@@ -80,7 +80,7 @@ public class RecipeListActivity extends AppCompatActivity {
     {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
-        adapter = new RecipeAdapter(recipeList, getApplicationContext(), username, userRef);
+        adapter = new RecipeAdapter(recipeList, this, username, userRef);
         recyclerView.setAdapter(adapter);
 
 
