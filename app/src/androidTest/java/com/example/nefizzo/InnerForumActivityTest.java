@@ -56,12 +56,22 @@ public class InnerForumActivityTest {
         test_editText(comment);
     }
 
+    @Test
+    public void test_restrictedComment() {
+        String comment = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        test_editText(comment);
+    }
+
     public void test_editText(String comment) {
         try {
             if (comment.length() == 0) {
                 throw new Exception(String.format("Empty Comment"));
             }
-
+            else if (comment.length() > 150) {
+                throw new Exception(String.format("Too many character"));
+            }
             ActivityScenario<InnerForumActivity> activityScenario = ActivityScenario.launch(InnerForumActivity.class);
             onView(withId(R.id.innerForumLayout)).check(matches(isDisplayed()));
 

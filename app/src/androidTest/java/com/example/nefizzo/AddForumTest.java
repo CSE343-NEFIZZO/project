@@ -72,6 +72,22 @@ public class AddForumTest {
         test_editTexts(forumTitle, forumCaption);
     }
 
+    @Test
+    public void test_restrictedForumTitle(){
+        String forumTitle = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        String forumCaption = "a";
+        test_editTexts(forumTitle, forumCaption);
+    }
+
+    @Test
+    public void test_restrictedForumCaption(){
+        String forumTitle = "forum title";
+        String forumCaption = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        test_editTexts(forumTitle, forumCaption);
+    }
+
     public void test_editTexts(String forumTitle, String forumCaption) {
         try {
             if(forumTitle.length() == 0){

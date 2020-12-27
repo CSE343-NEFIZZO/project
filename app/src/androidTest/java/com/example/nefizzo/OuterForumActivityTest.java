@@ -32,8 +32,6 @@ public class OuterForumActivityTest {
         onView(withId(R.id.searchEditTxt)).check(matches(isDisplayed()));
         //test search button
         onView(withId(R.id.searchBtn)).check(matches(isDisplayed()));
-        //test forum list
-        onView(withId(R.id.forumList)).check(matches(isDisplayed()));
 
     }
 

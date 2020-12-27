@@ -95,7 +95,8 @@ public class InnerForumActivity extends AppCompatActivity {
         forumRef.child("likeAmount").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                likeAmnt.setText(snapshot.getValue().toString());
+                if(snapshot.getValue() != null)
+                    likeAmnt.setText(snapshot.getValue().toString());
             }
 
             @Override
@@ -110,7 +111,8 @@ public class InnerForumActivity extends AppCompatActivity {
         forumRef.child("dislikeAmount").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                dislikeAmnt.setText(snapshot.getValue().toString());
+                if(snapshot.getValue() != null)
+                    dislikeAmnt.setText(snapshot.getValue().toString());
             }
 
             @Override
