@@ -32,28 +32,28 @@ public class MainScreen extends AppCompatActivity {
         forumButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), OuterForumActivity.class);
+                Intent intent = new Intent(MainScreen.this, OuterForumActivity.class);
                 startActivity(intent);
             }
         });
         addButon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddRecipeActivity.class);
+                Intent intent = new Intent(MainScreen.this, AddRecipeActivity.class);
                 startActivity(intent);
             }
         });
         listButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RecipeListActivity.class);
+                Intent intent = new Intent(MainScreen.this, RecipeListActivity.class);
                 startActivity(intent);
             }
         });
         searchButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                Intent intent = new Intent(MainScreen.this, SearchActivity.class);
                 startActivity(intent);
             }
         });
@@ -61,7 +61,7 @@ public class MainScreen extends AppCompatActivity {
         profileButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Profile.class);
+                Intent intent = new Intent(MainScreen.this, Profile.class);
                 startActivity(intent);
             }
         });

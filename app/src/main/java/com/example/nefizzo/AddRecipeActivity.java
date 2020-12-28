@@ -108,7 +108,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             if (urlImage != null) {
                 imageUrl = urlImage.toString();
             }
-            //uploadRecipe(userName2);
+            uploadRecipe(userName2);
             Toast.makeText(AddRecipeActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
         });
     }
@@ -152,7 +152,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                         if(user.getEmail().equals(ds.child("mailAddress").getValue().toString())){
                             userName2 = ds.child("username").getValue().toString();
                             uploadImage(userName2);
-                            uploadRecipe(userName2);
                             return;
                         }
 
@@ -195,8 +194,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Toast.makeText(AddRecipeActivity.this,"Recipe Uploaded",Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
-                    Intent intent = new Intent(AddRecipeActivity.this,MainScreen.class);
-                    startActivity(intent);
                     finish();
                 }
 
@@ -205,6 +202,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 progressDialog.dismiss();
 
             });
+
 
 
         }
