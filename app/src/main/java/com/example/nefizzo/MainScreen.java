@@ -20,13 +20,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import java.io.Serializable;
+import java.util.Random;
 
 public class MainScreen extends AppCompatActivity {
 
     Button addButon,listButton,forumButton,searchButton,profileButton,dailyRecipeButton;
     Dialog myDialog;
+    String name,url;
     DatabaseReference usersRef;
-    boolean hasRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,80 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void showDetails(){
+        usersRef = FirebaseDatabase.getInstance().getReference("Recipes");
 
+        usersRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String cookingHour,cookingMin,foodName,ingredients,instructions,itemImage,preparationHour,preparationMin,servingNumber;
+                    for (DataSnapshot ds: snapshot.getChildren()) {
+                        Log.i("asd",ds.child("foodName").getValue().toString());
+                        if(name.equals(ds.child("foodName").getValue().toString())) {
+                            cookingHour = ds.child("cookingHour").getValue().toString();
+                            cookingMin = ds.child("cookingMin").getValue().toString();
+                            foodName = ds.child("foodName").getValue().toString();
+                            ingredients = ds.child("ingredients").getValue().toString();
+                            instructions = ds.child("instructions").getValue().toString();
+                            itemImage = ds.child("itemImage").getValue().toString();
+                            preparationHour = ds.child("preparationHour").getValue().toString();
+                            preparationMin = ds.child("preparationMin").getValue().toString();
+                            servingNumber = ds.child("servingNumber").getValue().toString();
+
+                            Recipe newRecipe = new Recipe(foodName,servingNumber,Integer.parseInt(preparationHour) ,Integer.parseInt(preparationMin),Integer.parseInt(cookingHour),Integer.parseInt(cookingMin),ingredients,instructions,itemImage);
+                            Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
+                            intent.putExtra("recipe", (Serializable) newRecipe);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            return;
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+    }
+
+    public void loadDetails(){
+        usersRef = FirebaseDatabase.getInstance().getReference("Recipes");
+        ImageView recipePhoto;
+        TextView recipeName;
+        recipeName = myDialog.findViewById(R.id.recipeName);
+        recipePhoto = myDialog.findViewById(R.id.recipePhoto);
+
+        usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String BufferName,ImgUrl;
+                Random rand = new Random();
+                int randNum = rand.nextInt(3);
+                int counter = 0;
+                for (DataSnapshot ds: snapshot.getChildren()){
+                    if(counter == randNum){
+                        BufferName = ds.child("foodName").getValue().toString();
+                        ImgUrl = ds.child("itemImage").getValue().toString();
+                        name = BufferName;
+                        url = ImgUrl;
+
+                        recipeName.setText(BufferName);
+                        Picasso.get()
+                                .load(ImgUrl)
+                                .fit()
+                                .centerCrop()
+                                .into(recipePhoto);
+                        return;
+                    }
+                    counter++;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     public void showPopUp(){
@@ -47,7 +122,7 @@ public class MainScreen extends AppCompatActivity {
         myDialog.setContentView(R.layout.dailyrecipepopup);
         txtClose = myDialog.findViewById(R.id.txtclose);
         showDetailsButton = myDialog.findViewById(R.id.showDetailsButton);
-        Load();
+        loadDetails();
         showDetailsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,51 +137,6 @@ public class MainScreen extends AppCompatActivity {
             }
         });
         myDialog.show();
-    }
-
-    public void Load(){
-        usersRef = FirebaseDatabase.getInstance().getReference("Members");
-        ImageView recipePhoto;
-        TextView recipeName;
-        recipeName = myDialog.findViewById(R.id.recipeName);
-        recipePhoto = myDialog.findViewById(R.id.recipePhoto);
-
-        usersRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String BufferUsername;
-                for (DataSnapshot ds: snapshot.getChildren()){
-                    BufferUsername = ds.child("username").getValue().toString();
-                    //Log.i("aaa",BufferUsername);
-                    hasRecipe = ds.hasChild("Recipes");
-                    //Log.i("aaa",hasRecipe + "");
-                    //Recipe rec = (Recipe) ds.child(BufferUsername).child("Recipes").getValue();
-                    //Log.i("aaa",rec.getFoodName());
-
-                    if(hasRecipe){
-                        String Buffer =  ds.child("Recipes").getValue().toString();
-                        int index1 = Buffer.indexOf("="); //foodname 'in sonu
-                        int index2 = Buffer.indexOf("itemImage=") +9; // url'nin başı
-                        int index3 = Buffer.indexOf(", ingr"); //url nin sonu
-
-                        Log.i("aaaa", Buffer.substring(1,index1)+" ");
-                        Log.i("aaaa", Buffer.substring(index2+1,index3)+" ");
-                        recipeName.setText(Buffer.substring(1,index1));
-                        Picasso.get()
-                                .load(Buffer.substring(index2+1,index3))
-                                .fit()
-                                .centerCrop()
-                                .into(recipePhoto);
-                    }
-                }
-                return;
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
     }
 
     public void define(){
