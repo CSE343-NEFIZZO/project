@@ -47,7 +47,6 @@ public class MainScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String cookingHour,cookingMin,foodName,ingredients,instructions,itemImage,preparationHour,preparationMin,servingNumber;
                     for (DataSnapshot ds: snapshot.getChildren()) {
-                        Log.i("asd",ds.child("foodName").getValue().toString());
                         if(name.equals(ds.child("foodName").getValue().toString())) {
                             cookingHour = ds.child("cookingHour").getValue().toString();
                             cookingMin = ds.child("cookingMin").getValue().toString();
@@ -189,7 +188,6 @@ public class MainScreen extends AppCompatActivity {
         dailyRecipeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"toast message",Toast.LENGTH_SHORT).show();
                 showPopUp();
             }
         });
