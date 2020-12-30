@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="400dp"
+    android:background= "#f1f2f6"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:id="@+id/txtclose"
+        android:text="X"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:textColor="#487eb0"
+        android:background="@drawable/exitcircle"
+        ></TextView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Recipe"
+            android:textSize="30dp"
+            ></TextView>
+
+        <ImageView
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:src="@drawable/logo"
+            android:id="@+id/recipePhoto"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            ></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#487eb0"
+            android:text="yemeğin adı"
+            android:id="@+id/recipeName"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            ></TextView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/frame"
+            android:text="Show details"
+            android:id="@+id/showDetailsButton"
+            android:textAllCaps="false"
+            ></Button>
+
+    </LinearLayout>
+
+
+</LinearLayout>
