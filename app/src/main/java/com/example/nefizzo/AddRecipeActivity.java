@@ -156,7 +156,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                         }
 
                     }
-
                 }
 
                 @Override
@@ -165,8 +164,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
             });
         }
-
-
     }
 
     public void uploadRecipe(String userName) {
@@ -178,6 +175,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("Members").child(userName).child("Recipes").child(foodName.getText().toString());
 
+            DatabaseReference myRef2 = database.getReference("Recipes").child(foodName.getText().toString());
 
             Recipe recipeData = new Recipe(foodName.getText().toString(),
                     spinner.getSelectedItem().toString(),
@@ -189,7 +187,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                     instructions.getText().toString(),
                     imageUrl);
 
-            myRef.setValue(recipeData).addOnCompleteListener(task -> {
+        myRef2.setValue(recipeData);
+
+        myRef.setValue(recipeData).addOnCompleteListener(task -> {
 
                 if(task.isSuccessful()){
                     Toast.makeText(AddRecipeActivity.this,"Recipe Uploaded",Toast.LENGTH_LONG).show();
@@ -202,7 +202,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                 progressDialog.dismiss();
 
             });
-
 
 
         }
