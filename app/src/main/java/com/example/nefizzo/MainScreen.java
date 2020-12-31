@@ -45,7 +45,7 @@ public class MainScreen extends AppCompatActivity {
         usersRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String cookingHour,cookingMin,foodName,ingredients,instructions,itemImage,preparationHour,preparationMin,servingNumber;
+                    String cookingHour,cookingMin,foodName,ingredients,instructions,itemImage,preparationHour,preparationMin,servingNumber,category;
                     for (DataSnapshot ds: snapshot.getChildren()) {
                         if(name.equals(ds.child("foodName").getValue().toString())) {
                             cookingHour = ds.child("cookingHour").getValue().toString();
@@ -57,8 +57,9 @@ public class MainScreen extends AppCompatActivity {
                             preparationHour = ds.child("preparationHour").getValue().toString();
                             preparationMin = ds.child("preparationMin").getValue().toString();
                             servingNumber = ds.child("servingNumber").getValue().toString();
+                            category = ds.child("category").getValue().toString();
 
-                            Recipe newRecipe = new Recipe(foodName,servingNumber,Integer.parseInt(preparationHour) ,Integer.parseInt(preparationMin),Integer.parseInt(cookingHour),Integer.parseInt(cookingMin),ingredients,instructions,itemImage);
+                            Recipe newRecipe = new Recipe(foodName,servingNumber,category,Integer.parseInt(preparationHour) ,Integer.parseInt(preparationMin),Integer.parseInt(cookingHour),Integer.parseInt(cookingMin),ingredients,instructions,itemImage);
                             Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
                             intent.putExtra("recipe", (Serializable) newRecipe);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -58,6 +58,21 @@
                 android:layout_height="25dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="5dp"
+                android:text="Category"
+                android:textColor="#487eb0"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
                 android:text="Preparation Time"
                 android:id="@+id/preparationTimeTextView"
                 android:textColor="#487eb0"

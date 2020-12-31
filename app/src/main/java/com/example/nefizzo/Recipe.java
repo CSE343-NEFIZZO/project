@@ -5,6 +5,10 @@ import java.io.Serializable;
 public class Recipe implements Serializable {
     private String foodName;
     private String servingNumber;
+
+
+
+    private String category;
     private int preparationHour,preparationMin;
     private int cookingHour,cookingMin;
     private String ingredients;
@@ -13,9 +17,10 @@ public class Recipe implements Serializable {
 
     public Recipe(){}
 
-    public Recipe(String foodName, String servingNumber, int preparationHour, int preparationMin, int cookingHour, int cookingMin, String ingredients, String instructions, String itemImage) {
+    public Recipe(String foodName, String servingNumber, String category, int preparationHour, int preparationMin, int cookingHour, int cookingMin, String ingredients, String instructions, String itemImage) {
         this.foodName = foodName;
         this.servingNumber = servingNumber;
+        this.category = category;
         this.preparationHour = preparationHour;
         this.preparationMin = preparationMin;
         this.cookingHour = cookingHour;
@@ -23,6 +28,14 @@ public class Recipe implements Serializable {
         this.ingredients = ingredients;
         this.instructions = instructions;
         this.itemImage = itemImage;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getFoodName() {

@@ -73,7 +73,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         holder.servingNumber.setText("Servings: " + currentRecipe.getServingNumber());
 
         Picasso.get()
-                .load(currentRecipe.getItemImage())
+                .load(currentRecipe.getItemImage().isEmpty() ? null : currentRecipe.getItemImage() )
                 .fit()
                 .centerCrop()
                 .into(holder.imageView);
