@@ -39,6 +39,7 @@ public class SignActivity extends AppCompatActivity {
     private FirebaseUser user;
     DatabaseReference signRef;
     public int isFind = 0;
+    public int isFindMail = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +59,6 @@ public class SignActivity extends AppCompatActivity {
         password1 = findViewById(R.id.password1);
         password2 = findViewById(R.id.password2);
         mail = findViewById(R.id.mailEditText);
-
-             radiogroupGender = findViewById(R.id.gender);
-             signButton = findViewById(R.id.signButton);
-             username = findViewById(R.id.usernameEditText);
-             name = findViewById(R.id.nameEditText);
-             surname = findViewById(R.id.surnameEditText);
-             password1 = findViewById(R.id.password1);
-             password2 = findViewById(R.id.password2);
-             mail = findViewById(R.id.mailEditText);
     }
 
 
@@ -122,6 +114,16 @@ public class SignActivity extends AppCompatActivity {
         return 0;
     }
 
+    public void setTextElif(String usernamePar,String namePar,String surnamePar,String mailPar,String passPar1,String passPar2){
+        username.setText(usernamePar);
+        name.setText(namePar);
+        surname.setText(surnamePar);
+        mail.setText(mailPar);
+        password1.setText(passPar1);
+        password2.setText(passPar2);
+    }
+
+
     public void sign(){
         user = mAuth.getCurrentUser();
         signButton.setOnClickListener(new OnClickListener() {
@@ -137,7 +139,6 @@ public class SignActivity extends AppCompatActivity {
                 // checks empty edit text is exist or not.
                 int missingInfo = control();
                 if(missingInfo == 0){
-
                     int gelenid = radiogroupGender.getCheckedRadioButtonId();
                     if(gelenid == R.id.maleButton){
                         gender = "male";
@@ -151,23 +152,29 @@ public class SignActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             List<String> usernameList = new ArrayList<>();
+                            List<String> mailList = new ArrayList<>();
+                            mailList.clear();
                             usernameList.clear();
                             for (DataSnapshot ds: snapshot.getChildren()){
                                 String txt = ""+ds.child("username").getValue().toString();
+                                String buffermail = ""+ds.child("mailAddress").getValue().toString();
                                 usernameList.add(txt);
+                                mailList.add(buffermail);
                             }
 
                             for(int x = 0 ; x < usernameList.size() ; x++){
-                                //if username is invalid
-                                Log.i("bak", usernameList.get(x));
                                 if(usernameList.get(x).equals(usernametxt)) {
                                     isFind = 1;
                                 }
+                                if(mailList.get(x).equals(mailtxt)) {
+                                    isFindMail = 1;
+                                }
                             }
-                            if(isFind == 0){
+
+                            if(isFind == 0 && isFindMail == 0){
                                 if(passwordsFit(passwordtxt1,passwordtxt2) == 0){
                                     Toast.makeText(SignActivity.this,"Your passwords not equal", Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(SignActivity.this, SignActivity.class));
+                                    setTextElif(usernametxt,nametxt,surnametxt,mailtxt,"","");
                                 }
                                 if(passwordsFit(passwordtxt1,passwordtxt2) == 1){
                                     if(test_true_format_mail(mailtxt)==1){
@@ -187,9 +194,21 @@ public class SignActivity extends AppCompatActivity {
                                     }
                                     else{
                                         Toast.makeText(SignActivity.this,"mail address is baddly formatted.", Toast.LENGTH_LONG).show();
+                                        setTextElif(usernametxt,nametxt,surnametxt,"",passwordtxt1,passwordtxt2);
                                     }
                                 }
                             }
+                            if (isFind == 1){
+                                username.setError("username has already token,please enter different.");
+                                setTextElif("",nametxt,surnametxt,mailtxt,passwordtxt1,passwordtxt2);
+                                isFind = 0;
+                            }
+                            if(isFindMail == 1){
+                                mail.setError("mail has already token,please enter different.");
+                                setTextElif(usernametxt,nametxt,surnametxt,"",passwordtxt1,passwordtxt2);
+                                isFindMail = 0;
+                            }
+
                         }
 
                         @Override
@@ -197,10 +216,6 @@ public class SignActivity extends AppCompatActivity {
 
                         }
                     });
-
-                    if (isFind == 1){
-                        Toast.makeText(SignActivity.this,"Username invalid", Toast.LENGTH_LONG).show();
-                    }
 
                 }
 
