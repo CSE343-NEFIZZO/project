@@ -1,121 +1,164 @@
 package com.example.nefizzo;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.os.Handler;
 import android.view.View;
-import android.view.Menu;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-import androidx.annotation.NonNull;
-import androidx.core.view.GravityCompat;
+import java.util.Random;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+public class HomeScreen extends AppCompatActivity {
 
-public class HomeScreen extends AppCompatActivity implements OnNavigationItemSelectedListener{
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
-    }
+    ImageButton addRecipeButton,homeButton,forumButton,profileButton;
+    ImageView recipePhoto;
+    TextView rd_name,rd_prep,rd_cook,rd_servings,rd_ing_title,rd_ingredients,rd_inst_title,rd_instructions;
+    Button changeRecipeButton;
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-
-
-    /*
-    private AppBarConfiguration mAppBarConfiguration;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference ref;
+    FirebaseUser user;
+    static int amount=0;
+    int randomNum=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Dashboard");
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        define();
+        setRandomPhoto();
+        click();
+    }
+
+
+    private void define() {
+        addRecipeButton = (ImageButton) findViewById(R.id.addRecipeButton);
+        homeButton = (ImageButton) findViewById(R.id.homeButton);
+        forumButton = (ImageButton) findViewById(R.id.forumButton);
+        profileButton = (ImageButton) findViewById(R.id.profileButton);
+        recipePhoto = (ImageView) findViewById(R.id.recipePhoto);
+        rd_name = (TextView) findViewById(R.id.rd_name);
+        rd_prep = (TextView) findViewById(R.id.rd_prep);
+        rd_cook = (TextView) findViewById(R.id.rd_cook);
+        rd_servings = (TextView) findViewById(R.id.rd_servings);
+        rd_ing_title = (TextView) findViewById(R.id.rd_ing_title);
+        rd_ingredients = (TextView) findViewById(R.id.rd_ingredients);
+        rd_inst_title = (TextView) findViewById(R.id.rd_inst_title);
+        rd_instructions = (TextView) findViewById(R.id.rd_instructions);
+        changeRecipeButton = (Button) findViewById(R.id.changeRecipeButton);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+    }
+
+    private void setRandomPhoto(){
+        amount = 0;
+        ref = FirebaseDatabase.getInstance().getReference("Recipes");
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    amount++;
+                }
+                Random rand=new Random();
+                randomNum = rand.nextInt(amount);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
-        DrawerLayout drawer = findViewById(R.id.main);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+
+        ref = FirebaseDatabase.getInstance().getReference("Recipes");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int i = 0;
+                for (DataSnapshot ds : snapshot.getChildren()){
+                    if(i == randomNum){
+                        rd_name.setText(ds.child("foodName").getValue().toString());
+                        rd_prep.setText("Prep : "+
+                                ds.child("preparationHour").getValue().toString()+"h "+
+                                ds.child("preparationMin").getValue().toString()+"m");
+                        rd_cook.setText("Cook : "+
+                                ds.child("cookingHour").getValue().toString()+"h "+
+                                ds.child("cookingMin").getValue().toString()+"m");
+                        rd_servings.setText("Servings : "+ds.child("servingNumber").getValue().toString());
+                        rd_ingredients.setText(ds.child("ingredients").getValue().toString());
+                        rd_instructions.setText(ds.child("instructions").getValue().toString());
+                        if(!(ds.child("itemImage").getValue().toString()).isEmpty())
+                            Picasso.get().load(ds.child("itemImage").getValue().toString()).into(recipePhoto);
+                    }
+                    i++;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
-    @Override
-    public void onBackPressed(){
-        DrawerLayout drawer = findViewById(R.id.main);
-        if(drawer.isDrawerOpen(GravityCompat.START)){
-            drawer.closeDrawer(GravityCompat.START);
-
-        }
-        else{
-            super.onBackPressed();
-        }
+    private void click(){
+        changeRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRandomPhoto();
+            }
+        });
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                startActivity(intent);
+            }
+        });
+        addRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user == null){
+                    Toast.makeText(getApplicationContext(), "You need to log in to add recipe.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), AddRecipeActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+        forumButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), OuterForumActivity.class);
+                startActivity(intent);
+            }
+        });
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(user == null){
+                    Toast.makeText(getApplicationContext(), "You need to log in to enter to profile.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Profile.class);
+                    startActivity(intent);
+                }
+            }
+        });
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.nav_profile:
-                startActivity(new Intent(HomeScreen.this,Profile.class));
-                break;
-            case R.id.nav_forum:
-                startActivity(new Intent(HomeScreen.this,OuterForumActivity.class));
-                break;
-            case R.id.nav_addFood:
-                startActivity(new Intent(HomeScreen.this,AddRecipeActivity.class));
-                break;
-            case R.id.nav_list:
-                startActivity(new Intent(HomeScreen.this,RecipeListActivity.class));
-                break;
-            case R.id.nav_search:
-                startActivity(new Intent(HomeScreen.this,SearchActivity.class));
-                break;
-
-
-        }
-
-        DrawerLayout drawer = findViewById(R.id.main);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
- */
 }

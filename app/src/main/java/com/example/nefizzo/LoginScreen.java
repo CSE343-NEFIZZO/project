@@ -74,7 +74,7 @@ public class LoginScreen extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     mAuth.signOut();
-                    Intent intent = new Intent(getApplicationContext(),MainScreen.class);
+                    Intent intent = new Intent(getApplicationContext(),HomeScreen.class);
                     startActivity(intent);
                 }
             });
@@ -107,8 +107,8 @@ public class LoginScreen extends AppCompatActivity {
                     mAuth.signInWithEmailAndPassword(mailtxt, passwordtxt).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            Toast.makeText(LoginScreen.this, "You login Succesfully", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(), MainScreen.class);
+                            Toast.makeText(LoginScreen.this, "You logged in succesfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                             startActivity(intent);
                         }
 
