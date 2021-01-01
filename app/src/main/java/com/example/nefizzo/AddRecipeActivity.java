@@ -168,7 +168,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
             Log.i("asd","uploadRecipebtn");
             addRecipeRef = FirebaseDatabase.getInstance().getReference("Members");
-            addRecipeRef.addValueEventListener(new ValueEventListener() {
+            addRecipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String userName2;
@@ -201,7 +201,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                                                     ingredients.getText().toString(),
                                                     instructions.getText().toString(),
                                                     imageUrl);
-                                            addRecipeRef.child(username).child("Recipes").child(foodName.getText().toString()).setValue(recipeData);
+                                            usersRef.child(username).child("Recipes").child(foodName.getText().toString()).setValue(recipeData);
                                             myRef2.setValue(recipeData);
                                             break;
                                         }
@@ -223,7 +223,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
             });
             Log.i("asd","intent gecis");
-            Intent intent = new Intent(AddRecipeActivity.this, MainScreen.class);
+            Intent intent = new Intent(AddRecipeActivity.this, HomeScreen.class);
             startActivity(intent);
         }
     }

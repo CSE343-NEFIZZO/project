@@ -26,7 +26,7 @@ import java.util.Random;
 
 public class HomeScreen extends AppCompatActivity {
 
-    ImageButton addRecipeButton,homeButton,forumButton,profileButton;
+    ImageButton addRecipeButton,homeButton,forumButton,profileButton,searchButton;
     ImageView recipePhoto;
     TextView rd_name,rd_prep,rd_cook,rd_servings,rd_ing_title,rd_ingredients,rd_inst_title,rd_instructions;
     Button changeRecipeButton;
@@ -52,6 +52,7 @@ public class HomeScreen extends AppCompatActivity {
         homeButton = (ImageButton) findViewById(R.id.homeButton);
         forumButton = (ImageButton) findViewById(R.id.forumButton);
         profileButton = (ImageButton) findViewById(R.id.profileButton);
+        searchButton = (ImageButton) findViewById(R.id.searchButton);
         recipePhoto = (ImageView) findViewById(R.id.recipePhoto);
         rd_name = (TextView) findViewById(R.id.rd_name);
         rd_prep = (TextView) findViewById(R.id.rd_prep);
@@ -158,6 +159,13 @@ public class HomeScreen extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), Profile.class);
                     startActivity(intent);
                 }
+            }
+        });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
             }
         });
     }

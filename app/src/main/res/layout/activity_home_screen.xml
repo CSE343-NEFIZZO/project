@@ -15,18 +15,36 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageButton
-                android:id="@+id/addRecipeButton"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/add_recipe_button_foreground"
-                android:layout_width="80dp"
-                android:layout_height="80dp">
-            </ImageButton>
+
+            <RelativeLayout
+                android:id="@+id/topBar"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/searchButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/search_button_foreground">
+
+                </ImageButton>
+
+
+                <ImageButton
+                    android:id="@+id/addRecipeButton"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/add_recipe_button_foreground"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp">
+                </ImageButton>
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/recipePhoto"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/addRecipeButton"
+                android:layout_below="@+id/topBar"
                 android:paddingTop="10dp"
                 android:layout_width="300dp"
                 android:layout_height="200dp">
