@@ -208,7 +208,6 @@ public class SignActivity extends AppCompatActivity {
                                 setTextElif(usernametxt,nametxt,surnametxt,"",passwordtxt1,passwordtxt2);
                                 isFindMail = 0;
                             }
-
                         }
 
                         @Override

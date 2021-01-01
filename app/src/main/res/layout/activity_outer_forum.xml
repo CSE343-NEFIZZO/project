@@ -97,5 +97,36 @@
         android:layout_height="wrap_content"
         ></ListView>
 
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:background="@color/kırıkbeyaz"
+        android:layout_height="70dp">
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:background="@drawable/home_button_foreground"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/forumButton"
+            android:background="@drawable/forum_button_foreground"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/profileButton"
+            android:background="@drawable/profile_button_foreground"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ImageButton>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -78,9 +78,9 @@ public class AddForum extends AppCompatActivity {
                     caption = captionEdt.getText().toString();
                     if ((!forumTitle.isEmpty()) && (!caption.isEmpty())) {
                         if (forumTitle.length() > 80) {
-                            Toast.makeText(AddForum.this, "Forum title's length can not be longer than 80 character!", Toast.LENGTH_LONG).show();
+                            forumTitleEdt.setError("Forum title's length can not be longer than 80 character!");
                         } else if (caption.length() > 150) {
-                            Toast.makeText(AddForum.this, "Caption's length can not be longer than 150 character!", Toast.LENGTH_LONG).show();
+                            captionEdt.setError("Caption's length can not be longer than 150 character!");
                         } else {
                             forumRef = FirebaseDatabase.getInstance().getReference("Forums");
                             forumRef.addValueEventListener(new ValueEventListener() {
@@ -170,9 +170,9 @@ public class AddForum extends AppCompatActivity {
                             }
                         }
                     } else if (forumTitle.isEmpty()) {
-                        Toast.makeText(AddForum.this, "Enter a forum title!", Toast.LENGTH_LONG).show();
+                        forumTitleEdt.setError("Enter a forum title!");
                     } else if (caption.isEmpty()) {
-                        Toast.makeText(AddForum.this, "Enter a forum caption!", Toast.LENGTH_LONG).show();
+                        captionEdt.setError("Enter a forum caption!");
                     }
                 }
             }

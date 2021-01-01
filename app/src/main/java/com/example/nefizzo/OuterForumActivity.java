@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,11 +27,13 @@ import com.google.firebase.database.ValueEventListener;
 public class OuterForumActivity extends AppCompatActivity {
 
     Button addbtn,searchBtn,showForumsBtn;
+    ImageButton homeButton,forumButton,profileButton;
     ListView forumListView;
     OuterForumAdapter adp;
     EditText searchEditTxt;
     List<OuterForumModel> forumTitleList;
-
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
     DatabaseReference forumRef;
 
     @Override
@@ -48,6 +51,11 @@ public class OuterForumActivity extends AppCompatActivity {
         searchEditTxt = (EditText) findViewById(R.id.searchEditTxt);
         forumTitleList = new ArrayList<>();
         showForumsBtn = (Button) findViewById(R.id.showForumsBtn);
+        homeButton = (ImageButton) findViewById(R.id.homeButton);
+        forumButton = (ImageButton) findViewById(R.id.forumButton);
+        profileButton = (ImageButton) findViewById(R.id.profileButton);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
     }
 
     private void click() {
@@ -84,6 +92,34 @@ public class OuterForumActivity extends AppCompatActivity {
                 fillList("");
             }
         });
+
+        forumButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), OuterForumActivity.class);
+                startActivity(intent);
+            }
+        });
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(user == null){
+                    Toast.makeText(getApplicationContext(), "You need to log in to enter to profile.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Profile.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                intent.putExtra("flag","true");
+                startActivity(intent);
+            }
+        });
     }
 
     private void fillList(String text) {
@@ -117,7 +153,7 @@ public class OuterForumActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     forumTitleList.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        if(ds.child("forumTitle").getValue().toString().contains(text)) {
+                        if(ds.child("forumTitle").getValue().toString().toLowerCase().contains(text.toLowerCase())) {
                             String title = "" + ds.child("forumTitle").getValue().toString();
                             OuterForumModel temp = new OuterForumModel(title);
                             forumTitleList.add(temp);

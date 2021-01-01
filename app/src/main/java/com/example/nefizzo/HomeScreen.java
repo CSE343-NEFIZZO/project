@@ -3,10 +3,13 @@ package com.example.nefizzo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -22,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.Random;
 
 public class HomeScreen extends AppCompatActivity {
@@ -30,9 +34,10 @@ public class HomeScreen extends AppCompatActivity {
     ImageView recipePhoto;
     TextView rd_name,rd_prep,rd_cook,rd_servings,rd_ing_title,rd_ingredients,rd_inst_title,rd_instructions;
     Button changeRecipeButton;
-
+    Dialog myDialog;
+    String name,url;
     FirebaseAuth firebaseAuth;
-    DatabaseReference ref;
+    DatabaseReference ref,usersRef;
     FirebaseUser user;
     static int amount=0;
     int randomNum=0;
@@ -42,10 +47,116 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         define();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String data;
+        data = bundle.getString("flag");
+        if(data.equals("false")){
+             showPopUp();
+        }
         setRandomPhoto();
         click();
     }
 
+    public void showDetails(){
+        usersRef = FirebaseDatabase.getInstance().getReference("Recipes");
+
+        usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String cookingHour,cookingMin,foodName,ingredients,instructions,itemImage,preparationHour,preparationMin,servingNumber,category;
+                for (DataSnapshot ds: snapshot.getChildren()) {
+                    if(name.equals(ds.child("foodName").getValue().toString())) {
+                        cookingHour = ds.child("cookingHour").getValue().toString();
+                        cookingMin = ds.child("cookingMin").getValue().toString();
+                        foodName = ds.child("foodName").getValue().toString();
+                        ingredients = ds.child("ingredients").getValue().toString();
+                        instructions = ds.child("instructions").getValue().toString();
+                        itemImage = ds.child("itemImage").getValue().toString();
+                        preparationHour = ds.child("preparationHour").getValue().toString();
+                        preparationMin = ds.child("preparationMin").getValue().toString();
+                        servingNumber = ds.child("servingNumber").getValue().toString();
+                        category = ds.child("category").getValue().toString();
+
+                        Recipe newRecipe = new Recipe(foodName,servingNumber,category,Integer.parseInt(preparationHour) ,Integer.parseInt(preparationMin),Integer.parseInt(cookingHour),Integer.parseInt(cookingMin),ingredients,instructions,itemImage);
+                        Intent intent = new Intent(getApplicationContext(), RecipeDetailActivity.class);
+                        intent.putExtra("recipe", (Serializable) newRecipe);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void loadDetails(){
+        usersRef = FirebaseDatabase.getInstance().getReference("Recipes");
+        ImageView recipePhoto;
+        TextView recipeName;
+        recipeName = myDialog.findViewById(R.id.recipeName);
+        recipePhoto = myDialog.findViewById(R.id.recipePhoto);
+
+        usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String BufferName,ImgUrl;
+                Random rand = new Random();
+                int randNum = rand.nextInt(3);
+                int counter = 0;
+                for (DataSnapshot ds: snapshot.getChildren()){
+                    if(counter == randNum){
+                        BufferName = ds.child("foodName").getValue().toString();
+                        ImgUrl = ds.child("itemImage").getValue().toString();
+                        name = BufferName;
+                        url = ImgUrl;
+
+                        recipeName.setText(BufferName);
+                        Picasso.get()
+                                .load(ImgUrl)
+                                .fit()
+                                .centerCrop()
+                                .into(recipePhoto);
+                        return;
+                    }
+                    counter++;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    public void showPopUp(){
+        TextView txtClose;
+        Button showDetailsButton;
+        myDialog.setContentView(R.layout.dailyrecipepopup);
+        txtClose = myDialog.findViewById(R.id.txtclose);
+        showDetailsButton = myDialog.findViewById(R.id.showDetailsButton);
+        loadDetails();
+        showDetailsButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDetails();
+            }
+        });
+
+        txtClose.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.show();
+    }
 
     private void define() {
         addRecipeButton = (ImageButton) findViewById(R.id.addRecipeButton);
@@ -65,6 +176,7 @@ public class HomeScreen extends AppCompatActivity {
         changeRecipeButton = (Button) findViewById(R.id.changeRecipeButton);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
+        myDialog = new Dialog(this);
     }
 
     private void setRandomPhoto(){
@@ -129,6 +241,7 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                intent.putExtra("flag","true");
                 startActivity(intent);
             }
         });

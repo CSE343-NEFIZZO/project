@@ -20,15 +20,23 @@
                 android:id="@+id/topBar"
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
+                android:background="@color/kırıkbeyaz"
                 android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/logo"
+                    ></ImageView>
 
                 <ImageButton
                     android:id="@+id/searchButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="80dp"
                     android:background="@drawable/search_button_foreground">
-
                 </ImageButton>
 
 
@@ -144,6 +152,7 @@
         android:id="@+id/bottomBar"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
+        android:background="@color/kırıkbeyaz"
         android:layout_height="70dp">
         <ImageButton
             android:id="@+id/homeButton"

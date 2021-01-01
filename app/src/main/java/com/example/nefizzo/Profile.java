@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,9 +29,10 @@ import java.util.ArrayList;
 public class Profile extends AppCompatActivity {
 
     TextView mail,name,surname,username,gender;
-    Button recipeButton;
+    Button recipeButton,logoutButton;
     FirebaseAuth firebaseAuth;
     ImageView img;
+    ImageButton homeButton,forumButton,profileButton;
     DatabaseReference usersRef;
     FirebaseUser user;
     boolean hasRecipe;
@@ -43,10 +45,26 @@ public class Profile extends AppCompatActivity {
         user = firebaseAuth.getCurrentUser();
         defineValues();
         readData();
-        recipesButton();
+        click();
     }
 
-    public void recipesButton(){
+    public void defineValues(){
+        username = findViewById(R.id.usernameProfil);
+        name = findViewById(R.id.nameProfil);
+        surname = findViewById(R.id.surnameProfil);
+        mail = findViewById(R.id.mailProfil);
+        gender = findViewById(R.id.genderProfil);
+        recipeButton = findViewById(R.id.recipes);
+        img = findViewById(R.id.imgview_photo);
+        homeButton = (ImageButton) findViewById(R.id.homeButton);
+        forumButton = (ImageButton) findViewById(R.id.forumButton);
+        profileButton = (ImageButton) findViewById(R.id.profileButton);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        logoutButton = (Button) findViewById(R.id.logout);
+    }
+
+    public void click(){
         recipeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,16 +77,42 @@ public class Profile extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    public void defineValues(){
-        username = findViewById(R.id.usernameProfil);
-        name = findViewById(R.id.nameProfil);
-        surname = findViewById(R.id.surnameProfil);
-        mail = findViewById(R.id.mailProfil);
-        gender = findViewById(R.id.genderProfil);
-        recipeButton = findViewById(R.id.recipes);
-        img = findViewById(R.id.imgview_photo);
+        forumButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), OuterForumActivity.class);
+                startActivity(intent);
+            }
+        });
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(user == null){
+                    Toast.makeText(getApplicationContext(), "You need to log in to enter to profile.", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Profile.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                intent.putExtra("flag","true");
+                startActivity(intent);
+            }
+        });
+        logoutButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuth.signOut();
+                Intent intent = new Intent(getApplicationContext(), LoginScreen.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void readData() {

@@ -23,7 +23,7 @@ public class LoginScreen extends AppCompatActivity {
 
     Button loginButton,forgotButton,createAccountButton,guestButton;
     EditText mail,password;
-    String mailtxt,passwordtxt;
+    String mailtxt, passwordtxt;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
 
@@ -75,6 +75,8 @@ public class LoginScreen extends AppCompatActivity {
                 public void onClick(View view) {
                     mAuth.signOut();
                     Intent intent = new Intent(getApplicationContext(),HomeScreen.class);
+                    String flag = "false";
+                    intent.putExtra("flag",flag);
                     startActivity(intent);
                 }
             });
@@ -107,8 +109,9 @@ public class LoginScreen extends AppCompatActivity {
                     mAuth.signInWithEmailAndPassword(mailtxt, passwordtxt).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
-                            Toast.makeText(LoginScreen.this, "You logged in succesfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                            String flag = "false";
+                            intent.putExtra("flag",flag);
                             startActivity(intent);
                         }
 

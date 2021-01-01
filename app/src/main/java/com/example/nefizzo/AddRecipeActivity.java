@@ -59,10 +59,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         defineEverything();
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
-
-
-        //Log.i("asd",user.getEmail().toString());
-
     }
 
     private void defineEverything() {
@@ -81,13 +77,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         storageReference = firebaseStorage.getReference();
         createAdapter();
         setAdapterToSpinner();
-        Log.i("asd","define");
     }
 
     public void SelectImageBtn(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 1907);
-        Log.i("asd","selectimagebtn");
     }
 
     @Override
@@ -97,8 +91,6 @@ public class AddRecipeActivity extends AppCompatActivity {
             uri = data.getData();
             recipeImage.setImageURI(uri);
             checkImage = 1;
-            Log.i("asd","selectimageactivity");
-
         }
     }
 
@@ -112,22 +104,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         spinner.setAdapter(arrayAdapter);
         spinner2.setAdapter(categoryAdapter);
     }
-
-    /*public void uploadImage(String userName2) {
-        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("RecipeImages").child(uri.getLastPathSegment());
-
-        mStorageRef.putFile(uri).addOnSuccessListener(taskSnapshot -> {
-            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-            while (!uriTask.isComplete()) ;
-            Uri urlImage = uriTask.getResult();
-            if (urlImage != null) {
-                imageUrl = urlImage.toString();
-            }
-            Log.i("asd","uploadimage");
-            uploadRecipe(userName2);
-            Toast.makeText(AddRecipeActivity.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
-        });
-    }*/
 
     public void UploadRecipeBtn(View view) {
         //uploadImage();
@@ -165,8 +141,6 @@ public class AddRecipeActivity extends AppCompatActivity {
             Toast.makeText(AddRecipeActivity.this,"Please pick an image ! ",Toast.LENGTH_LONG).show();
         }
         else{
-
-            Log.i("asd","uploadRecipebtn");
             addRecipeRef = FirebaseDatabase.getInstance().getReference("Members");
             addRecipeRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -178,7 +152,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                     ref.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Log.i("asd","girdiburaya");
                             Toast.makeText(AddRecipeActivity.this, "Recipe uploaded!", Toast.LENGTH_SHORT).show();
                             Task<Uri> temp = taskSnapshot.getMetadata().getReference().getDownloadUrl();
                             while (!temp.isComplete()) ;
@@ -222,32 +195,10 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                 }
             });
-            Log.i("asd","intent gecis");
             Intent intent = new Intent(AddRecipeActivity.this, HomeScreen.class);
             startActivity(intent);
         }
     }
-
-    /*public void uploadRecipe(String userName) {
-
-        Log.i("asd","uploadRecipe");
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("Members").child(userName).child("Recipes").child(foodName.getText().toString());
-
-            DatabaseReference myRef2 = database.getReference("Recipes").child(foodName.getText().toString());
-
-
-
-        myRef2.setValue(recipeData);
-        myRef.setValue(recipeData);
-        Intent intent = new Intent(AddRecipeActivity.this, MainScreen.class);
-        startActivity(intent);
-
-
-        }*/
-
-
-
 
 }
 

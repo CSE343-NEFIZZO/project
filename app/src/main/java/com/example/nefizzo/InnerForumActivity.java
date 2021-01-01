@@ -130,7 +130,7 @@ public class InnerForumActivity extends AppCompatActivity {
                 if (user == null) {
                     Toast.makeText(getApplicationContext(), "You need to sign in to add comment!", Toast.LENGTH_LONG).show();
                 } else if (comment.length() > 150) {
-                    Toast.makeText(getApplicationContext(), "Comment's length cannot be longer than 150 character!", Toast.LENGTH_LONG).show();
+                    commentEdtTxt.setError("Comment's length cannot be longer than 150 character!");
                 } else if (!comment.isEmpty()) {
                     usersRef = FirebaseDatabase.getInstance().getReference("Members");
                     usersRef.addValueEventListener(new ValueEventListener() {
@@ -157,7 +157,7 @@ public class InnerForumActivity extends AppCompatActivity {
                     });
                 }
                 if (comment.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Empty comment is not allowed.", Toast.LENGTH_LONG).show();
+                    commentEdtTxt.setError("Empty comment is not allowed.");
                 }
                 fillList();
             }
