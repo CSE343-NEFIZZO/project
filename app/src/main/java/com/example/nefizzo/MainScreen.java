@@ -2,6 +2,7 @@ package com.example.nefizzo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -13,7 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +27,7 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class MainScreen extends AppCompatActivity {
+
 
     Button addButon,listButton,forumButton,searchButton,profileButton,dailyRecipeButton;
     Dialog myDialog;
@@ -36,6 +40,7 @@ public class MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main_screen);
         myDialog = new Dialog(this);
         define();
+
         send();
     }
 
@@ -140,6 +145,8 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void define(){
+
+
         forumButton = findViewById(R.id.forumButton);
         addButon = findViewById(R.id.addfoodButton);
         listButton = findViewById(R.id.listFoodButton);

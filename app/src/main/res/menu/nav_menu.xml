@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/categories"
+            android:icon="@drawable/ic_category"
+            android:title="@string/categories" />
+        <item
+            android:id="@+id/appetizers"
+            android:icon="@drawable/ic_appetizer"
+            android:title="@string/appetizers" />
+        <item
+            android:id="@+id/soups"
+            android:icon="@drawable/ic_soup"
+            android:title="@string/soups" />
+        <item
+            android:id="@+id/vegetables"
+            android:icon="@drawable/ic_vegetables"
+            android:title="@string/vegetables" />
+        <item
+            android:id="@+id/main_dishes"
+            android:icon="@drawable/ic_main_dishes"
+            android:title="@string/main_dishes" />
+        <item
+            android:id="@+id/breads"
+            android:icon="@drawable/ic_bread"
+            android:title="@string/breads" />
+        <item
+            android:id="@+id/desserts"
+            android:icon="@drawable/ic_sweets"
+            android:title="@string/desserts" />
+        <item
+            android:id="@+id/miscellaneous"
+            android:icon="@drawable/ic_miscellaneous"
+            android:title="@string/miscellaneous" />
+    </group>
+</menu>

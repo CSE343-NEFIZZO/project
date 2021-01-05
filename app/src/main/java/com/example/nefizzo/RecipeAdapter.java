@@ -107,7 +107,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         TextView servingNumber;
         TextView user;
         public ImageButton delete_button;
-        int layoutPosition;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -154,11 +153,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             list.clear();
 
             Toast.makeText(context, "Recipe is deleted", Toast.LENGTH_LONG).show();
-        }
-
-        public void dialogEvent(View view, int position)
-        {
-
         }
     }
 }

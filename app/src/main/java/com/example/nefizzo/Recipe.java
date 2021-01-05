@@ -5,9 +5,6 @@ import java.io.Serializable;
 public class Recipe implements Serializable {
     private String foodName;
     private String servingNumber;
-
-
-
     private String category;
     private int preparationHour,preparationMin;
     private int cookingHour,cookingMin;

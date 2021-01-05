@@ -1,13 +1,17 @@
 package com.example.nefizzo;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,9 +33,12 @@ import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.util.Random;
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ImageButton addRecipeButton,homeButton,forumButton,profileButton,searchButton;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    ActionBarDrawerToggle toggle;
+    ImageButton addRecipeButton,homeButton,forumButton,profileButton,searchButton, navButton;
     ImageView recipePhoto;
     TextView rd_name,rd_prep,rd_cook,rd_servings,rd_ing_title,rd_ingredients,rd_inst_title,rd_instructions;
     Button changeRecipeButton;
@@ -159,11 +167,25 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     private void define() {
-        addRecipeButton = (ImageButton) findViewById(R.id.addRecipeButton);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer);
+        navigationView = findViewById(R.id.navmenu);
+        navigationView.setItemIconTintList(null);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);
+        navigationView.setNavigationItemSelectedListener(this);
+        toggle.syncState();
+
+        addRecipeButton = (ImageButton) findViewById(R.id.add_recipe_image_button);
         homeButton = (ImageButton) findViewById(R.id.homeButton);
         forumButton = (ImageButton) findViewById(R.id.forumButton);
         profileButton = (ImageButton) findViewById(R.id.profileButton);
-        searchButton = (ImageButton) findViewById(R.id.searchButton);
+        searchButton = (ImageButton) findViewById(R.id.search_recipe_image_button);
+
         recipePhoto = (ImageView) findViewById(R.id.recipePhoto);
         rd_name = (TextView) findViewById(R.id.rd_name);
         rd_prep = (TextView) findViewById(R.id.rd_prep);
@@ -177,6 +199,7 @@ public class HomeScreen extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         myDialog = new Dialog(this);
+
     }
 
     private void setRandomPhoto(){
@@ -281,5 +304,59 @@ public class HomeScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        switch (id) {
+            case R.id.appetizers:
+                Intent appetizer = new Intent(HomeScreen.this, CategoryActivity.class);
+                String appetizers = "Appetizers";
+                appetizer.putExtra("CATEGORY", appetizers);
+                startActivity(appetizer);
+                break;
+            case R.id.soups:
+                Intent soups = new Intent(HomeScreen.this, CategoryActivity.class);
+                String soup = "Soups";
+                soups.putExtra("CATEGORY", soups);
+                startActivity(soups);
+                break;
+            case R.id.vegetables:
+                Intent vegetables = new Intent(HomeScreen.this, CategoryActivity.class);
+                String vegetable = "Vegetables";
+                vegetables.putExtra("CATEGORY", vegetable);
+                startActivity(vegetables);
+                break;
+            case R.id.main_dishes:
+                Intent main_dishes = new Intent(HomeScreen.this, CategoryActivity.class);
+                String main_dish = "Main Dishes";
+                main_dishes.putExtra("CATEGORY", main_dish);
+                startActivity(main_dishes);
+                break;
+            case R.id.breads:
+                Intent breads = new Intent(HomeScreen.this, CategoryActivity.class);
+                String bread = "Breads";
+                breads.putExtra("CATEGORY", bread);
+                startActivity(breads);
+                break;
+            case R.id.desserts:
+                Intent desserts = new Intent(HomeScreen.this, CategoryActivity.class);
+                String dessert = "Desserts";
+                desserts.putExtra("CATEGORY", dessert);
+                startActivity(desserts);
+                break;
+            case R.id.miscellaneous:
+                Intent miscellaneous = new Intent(HomeScreen.this, CategoryActivity.class);
+                String misc = "Miscellaneous";
+                miscellaneous.putExtra("CATEGORY", misc);
+                startActivity(miscellaneous);
+                break;
+
+        }
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
