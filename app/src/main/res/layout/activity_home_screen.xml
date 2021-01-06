@@ -94,6 +94,7 @@
                     android:layout_height="wrap_content" />
 
                 <Button
+                    android:layout_marginTop="10dp"
                     android:id="@+id/changeRecipeButton"
                     android:layout_below="@+id/rd_instructions"
                     android:layout_centerHorizontal="true"
@@ -107,7 +108,7 @@
                 <TextView
                     android:layout_below="@+id/changeRecipeButton"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="140dp"
                     android:text=" ">
 
                 </TextView>
