@@ -196,6 +196,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
             });
             Intent intent = new Intent(AddRecipeActivity.this, HomeScreen.class);
+            String flag = "true";
+            intent.putExtra("flag",flag);
             startActivity(intent);
         }
     }
