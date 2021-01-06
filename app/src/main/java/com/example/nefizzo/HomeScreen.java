@@ -319,7 +319,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             case R.id.soups:
                 Intent soups = new Intent(HomeScreen.this, CategoryActivity.class);
                 String soup = "Soups";
-                soups.putExtra("CATEGORY", soups);
+                soups.putExtra("CATEGORY", soup);
                 startActivity(soups);
                 break;
             case R.id.vegetables:
