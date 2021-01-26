@@ -111,7 +111,7 @@ public class AddRecipeActivityTest {
     public void control_inputs(){
         ActivityScenario<AddRecipeActivity> activityScenario = ActivityScenario.launch(AddRecipeActivity.class);
 
-        Recipe testFood = new Recipe("testname","4-6",5,40,
+        Recipe testFood = new Recipe("testname","4-6","Main Dishes",5,40,
                 2,30,"ingredientsForTest","tomato pepper","test.jpg");
 
         if(testFood.getFoodName().length() != 0){
