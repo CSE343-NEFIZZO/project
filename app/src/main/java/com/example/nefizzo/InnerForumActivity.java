@@ -54,7 +54,6 @@ public class InnerForumActivity extends AppCompatActivity {
         setLike();
         setDislike();
         click();
-
     }
 
     private void setCaption() {
@@ -145,9 +144,7 @@ public class InnerForumActivity extends AppCompatActivity {
                                     forumRef.child(comment).setValue(temp);
                                     commentEdtTxt.setText("");
                                 }
-
                             }
-
                         }
 
                         @Override
