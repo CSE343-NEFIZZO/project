@@ -36,5 +36,9 @@
             android:id="@+id/miscellaneous"
             android:icon="@drawable/ic_miscellaneous"
             android:title="@string/miscellaneous" />
+        <item
+            android:id="@+id/signout"
+            android:icon="@drawable/sign_out_button_foreground"
+            android:title="Login Page" />
     </group>
 </menu>

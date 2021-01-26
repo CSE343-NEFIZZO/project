@@ -10,7 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -200,6 +202,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         user = firebaseAuth.getCurrentUser();
         myDialog = new Dialog(this);
 
+
     }
 
     private void setRandomPhoto(){
@@ -351,6 +354,14 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 String misc = "Miscellaneous";
                 miscellaneous.putExtra("CATEGORY", misc);
                 startActivity(miscellaneous);
+                break;
+            case R.id.signout:
+                if(firebaseAuth.getCurrentUser() != null){
+                    firebaseAuth.signOut();
+                }
+
+                Intent intent = new Intent(getApplicationContext(), LoginScreen.class);
+                startActivity(intent);
                 break;
 
         }
