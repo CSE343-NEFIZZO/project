@@ -23,6 +23,8 @@
 
     <LinearLayout
         android:id="@+id/forumView"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@id/caption"
@@ -87,6 +89,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/forumTitle"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:text="Forum topic"
         android:textSize="20dp"></TextView>
 
@@ -96,6 +100,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/comment"
         android:layout_below="@id/forumView"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:background="#fff"></ListView>
 
 

@@ -17,13 +17,13 @@
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="22dp"
             android:textStyle="bold"></TextView>
 
         <TextView
             android:id="@+id/comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"></TextView>
+            android:textSize="18dp"></TextView>
     </LinearLayout>
 </LinearLayout>
